@@ -1,0 +1,44 @@
+{
+  "request_normal": {
+    "taskType": "実家の安否確認",
+    "packType": "スタンダード",
+    "areaPref": "山口県",
+    "areaCity": "下関市",
+    "distance": "15",
+    "urgency": "通常",
+    "options": "追加立ち寄り, 報告強化",
+    "notes": "庭の草の伸び具合も確認してほしい",
+    "name": "山田 太郎",
+    "email": "yamada@example.com",
+    "phone": "090-1234-5678",
+    "consent": "on",
+    "website": "",
+    "timestamp": "2026-03-01T10:00:00.000Z",
+    "formType": "request"
+  },
+  "partner_normal": {
+    "nickname": "下関のやさしいおばちゃん",
+    "bio": "普段は主婦をしています。お掃除とお話が得意です。",
+    "areaPref": "山口県",
+    "availableTime": "平日10:00〜15:00",
+    "email": "partner@example.com",
+    "contactLine": "https://line.me/ti/p/...",
+    "consent": "on",
+    "website": "",
+    "timestamp": "2026-03-01T11:00:00.000Z",
+    "formType": "partner"
+  },
+  "spam_honeypot": {
+    "taskType": "買い物代行",
+    "packType": "ライト",
+    "areaPref": "東京都",
+    "areaCity": "渋谷区",
+    "urgency": "当日",
+    "name": "Spam Bot",
+    "email": "spam@example.com",
+    "consent": "on",
+    "website": "http://spam-link.com",
+    "timestamp": "2026-03-01T12:00:00.000Z",
+    "formType": "request"
+  }
+}

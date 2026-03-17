@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>送信完了 | カゾクノカワリ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body
+    class="bg-amber-50 text-slate-800 antialiased h-screen flex items-center justify-center"
+  >
+    <div
+      class="max-w-md w-full bg-white p-10 rounded-3xl shadow-xl text-center border-4 border-orange-100"
+    >
+      <div
+        class="w-20 h-20 bg-orange-100 text-orange-500 rounded-full flex items-center justify-center mx-auto mb-6"
+      >
+        <svg
+          class="w-10 h-10"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="3"
+            d="M5 13l4 4L19 7"
+          ></path>
+        </svg>
+      </div>
+      <h1 class="text-3xl font-black mb-4 text-slate-800">
+        送信が完了しました
+      </h1>
+      <p class="text-slate-600 mb-8 font-bold leading-relaxed">
+        内容を確認の上、運営よりご連絡いたします。<br />
+        今しばらくお待ちください。
+      </p>
+
+      <!-- パートナー登録者向けのLINE誘導 (初期状態は非表示) -->
+      <div
+        id="line-prompt"
+        class="hidden bg-teal-50 border-2 border-teal-100 rounded-2xl p-6 mb-8 text-left"
+      >
+        <h3 class="font-black text-teal-800 mb-2 flex items-center gap-2">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"
+            />
+          </svg>
+          パートナー登録をされた方へ
+        </h3>
+        <p class="text-sm text-slate-700 font-bold mb-4">
+          案件のご案内やスムーズなやり取りのため、公式LINEへのご登録をお願いいたします。
+        </p>
+        <div class="flex flex-col items-center mb-4">
+          <img
+            src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://line.me/R/ti/p/%40277rcesk"
+            alt="LINE QR Code"
+            class="w-32 h-32 rounded-xl border-2 border-teal-200 mb-2"
+          />
+          <span class="text-xs text-slate-500 font-bold"
+            >スマートフォンで読み取ってください</span
+          >
+        </div>
+        <a
+          href="https://line.me/R/ti/p/%40277rcesk"
+          target="_blank"
+          class="inline-flex items-center justify-center w-full bg-[#06C755] text-white font-bold px-6 py-3 rounded-xl hover:bg-[#05b34c] transition shadow"
+        >
+          <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.036 9.608.391.084.922.258 1.057.592.122.303.04.725.018.919-.034.303-.223 1.343-.27 1.62-.058.347-.275 1.355 1.186.738 1.462-.616 7.886-4.647 10.428-7.698 1.03-1.236 1.545-2.484 1.545-3.779zm-14.828 2.533h-2.688c-.387 0-.703-.316-.703-.703v-4.22c0-.387.316-.703.703-.703.387 0 .703.316.703.703v3.517h1.985c.387 0 .703.316.703.703 0 .387-.316.703-.703.703zm3.358-.703c0 .387-.316.703-.703.703-.387 0-.703-.316-.703-.703v-4.22c0-.387.316-.703.703-.703.387 0 .703.316.703.703v4.22zm4.424-2.813l-1.89 2.813h1.89c.387 0 .703.316.703.703 0 .387-.316.703-.703.703h-3.393c-.387 0-.703-.316-.703-.703v-4.22c0-.387.316-.703.703-.703h3.393c.387 0 .703.316.703.703 0 .387-.316.703-.703.703h-1.985l1.89-2.813c.22-.328.133-.772-.195-.992-.328-.22-.772-.133-.992.195zm4.316 2.813c0 .387-.316.703-.703.703h-2.688c-.387 0-.703-.316-.703-.703v-4.22c0-.387.316-.703.703-.703h2.688c.387 0 .703.316.703.703 0 .387-.316.703-.703.703h-1.985v.352h1.985c.387 0 .703.316.703.703 0 .387-.316.703-.703.703h-1.985v.352h1.985c.387 0 .703.316.703.703z"
+            />
+          </svg>
+          公式LINEを友だち追加する
+        </a>
+      </div>
+
+      <a
+        href="/index.html"
+        class="inline-block bg-orange-500 text-white font-black px-8 py-4 rounded-full hover:bg-orange-600 transition shadow-lg transform hover:-translate-y-1"
+      >
+        トップページへ戻る
+      </a>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get("type") === "partner") {
+          document.getElementById("line-prompt").classList.remove("hidden");
+        }
+      });
+    </script>
+  </body>
+</html>

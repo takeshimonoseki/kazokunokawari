@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+  }
+}
+
+/* タイムラインの装飾 */
+.group.is-active:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 1.25rem;
+  width: 2px;
+  background: #fbd38d; /* orange-300 */
+  z-index: 0;
+}
+@media (min-width: 768px) {
+  .group.is-active:before {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
