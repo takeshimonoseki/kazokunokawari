@@ -1,92 +1,171 @@
 // 料金シミュレーター
-// 料金は「サービス料金＋出張費＋オプション料金−割引」で決まります。
+// 概算はフォームへ自動反映せず、「この内容で相談する」経由のときだけ渡します。
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Simulator elements
   const serviceRadios = document.querySelectorAll('input[name="sim-service"]');
   const areaRadios = document.querySelectorAll('input[name="sim-area"]');
   const optionCheckboxes = document.querySelectorAll('input[name="sim-option"]');
+  const distanceInput = document.getElementById("sim-distance-km");
+  const distanceNote = document.getElementById("sim-distance-note");
+  const totalTextEls = document.querySelectorAll("[data-sim-total-text]");
+  const selectedSummary = document.querySelector("[data-sim-selected-summary]");
+  const serviceNameEl = document.querySelector("[data-sim-service-name]");
+  const servicePriceEl = document.querySelector("[data-sim-service-price]");
+  const areaPriceEl = document.querySelector("[data-sim-area-price]");
+  const optionPriceEl = document.querySelector("[data-sim-option-price]");
+  const actualCostsEl = document.querySelector("[data-sim-actual-costs]");
+  const consultBtns = document.querySelectorAll("#sim-to-request-form, #sim-to-request-form-side, #sim-to-request-form-mobile");
+  const fillTestBtn = document.getElementById("fill-test-request");
 
-  const totalDisplayEl = document.getElementById("sim-total-display");
-  const estimateTextEl = document.getElementById("sim-estimate-text");
-  const toRequestFormBtn = document.getElementById("sim-to-request-form");
-
-  // Request form sync targets (still need to sync the estimated total)
+  const hiddenPlan = document.getElementById("hidden-plan");
+  const hiddenSelectedItems = document.getElementById("hidden-selectedItems");
+  const hiddenTotalKm = document.getElementById("hidden-totalKm");
+  const hiddenBreakdownJSON = document.getElementById("hidden-breakdownJSON");
   const hiddenEstimatedTotal = document.getElementById("hidden-estimatedTotal");
-  const formPlan = document.getElementById("form-sim-plan"); // Not used anymore for plan, repurpose or remove from form sync
-  const formItems = document.getElementById("form-sim-items"); // Not used anymore for items, repurpose or remove from form sync
-  const formKm = document.getElementById("form-sim-km"); // Not used anymore for km, repurpose or remove from form sync
-  const formTotal = document.getElementById("form-sim-total"); // This should be updated
+  const formBox = document.getElementById("form-sim-box");
+  const formTitle = document.getElementById("form-sim-title");
+  const formEmpty = document.getElementById("form-sim-empty");
+  const formDetails = document.querySelectorAll("[data-form-sim-detail]");
+  const formService = document.getElementById("form-sim-plan");
+  const formArea = document.getElementById("form-sim-km");
+  const formOptions = document.getElementById("form-sim-items");
+  const formTotal = document.getElementById("form-sim-total");
+  const formNote = document.getElementById("form-sim-note");
+
+  const baseActualCosts = ["購入品そのものの代金", "高速道路代", "駐車場代", "特殊な消耗品"];
+  let latestEstimate = null;
+
+  function yen(amount, suffix = "円〜") {
+    return `${amount.toLocaleString()}${suffix}`;
+  }
+
+  function selectedRadio(radios) {
+    return Array.from(radios).find((radio) => radio.checked);
+  }
+
+  function travelFeeFromDistance(rawValue) {
+    if (rawValue === "") return null;
+    const km = Number(rawValue);
+    if (!Number.isFinite(km) || km < 0) return null;
+    if (km <= 10) return { label: "片道10km以内", price: 0, individual: false };
+    if (km <= 25) return { label: "片道10km超〜25km", price: 2200, individual: false };
+    if (km <= 50) return { label: "片道25km超〜50km", price: 5500, individual: false };
+    if (km <= 90) return { label: "片道50km超〜90km", price: 8800, individual: false };
+    return { label: "片道90km超", price: 0, individual: true };
+  }
 
   function calculate() {
-    let total = 0;
-    let serviceName = "";
-    let areaName = "";
-    let isIndividualEstimate = false;
+    const service = selectedRadio(serviceRadios);
+    const area = selectedRadio(areaRadios);
+    const servicePrice = Number(service?.dataset.price || 0);
+    const serviceIndividual = service?.dataset.individual === "true";
+    let areaLabel = area?.value || "未選択";
+    let areaPrice = Number(area?.dataset.price || 0);
+    let areaIndividual = area?.dataset.individual === "true";
+    const distanceFee = travelFeeFromDistance(distanceInput?.value || "");
+
+    if (distanceFee) {
+      areaLabel = distanceFee.label;
+      areaPrice = distanceFee.price;
+      areaIndividual = distanceFee.individual;
+    }
+
+    let optionTotal = 0;
     const selectedOptions = [];
+    const actualCosts = new Set(baseActualCosts);
 
-    // サービス料金の計算
-    let selectedService = Array.from(serviceRadios).find(radio => radio.checked);
-    if (selectedService) {
-      serviceName = selectedService.value;
-      const servicePrice = parseInt(selectedService.dataset.price || "0", 10);
-      if (serviceName === "その他・個別相談") {
-        isIndividualEstimate = true;
-      } else {
-        total += servicePrice;
+    optionCheckboxes.forEach((checkbox) => {
+      if (!checkbox.checked) return;
+      selectedOptions.push(checkbox.value);
+      if (checkbox.dataset.type !== "actual_cost") {
+        optionTotal += Number(checkbox.dataset.price || 0);
       }
-    }
-
-    // 出張費の計算
-    let selectedArea = Array.from(areaRadios).find(radio => radio.checked);
-    if (selectedArea) {
-      areaName = selectedArea.value;
-      const areaPrice = parseInt(selectedArea.dataset.price || "0", 10);
-      if (areaName === "それ以上の遠方") {
-        isIndividualEstimate = true;
-      } else {
-        total += areaPrice;
-      }
-    }
-
-    // オプション料金の計算
-    optionCheckboxes.forEach(checkbox => {
-      if (checkbox.checked) {
-        selectedOptions.push(checkbox.value);
-        const optionPrice = parseInt(checkbox.dataset.price || "0", 10);
-        // 実費項目は料金に含めないが、選択されたことは記録する
-        if (checkbox.dataset.type !== "actual_cost") {
-          total += optionPrice;
-        }
+      if (checkbox.dataset.actual) {
+        checkbox.dataset.actual.split("/").map((item) => item.trim()).filter(Boolean).forEach((item) => actualCosts.add(item));
       }
     });
 
-    // UIの更新
-    if (isIndividualEstimate) {
-      if (totalDisplayEl) totalDisplayEl.textContent = "0";
-      if (estimateTextEl) estimateTextEl.classList.remove("hidden");
-    } else {
-      if (totalDisplayEl) totalDisplayEl.textContent = total.toLocaleString();
-      if (estimateTextEl) estimateTextEl.classList.add("hidden");
-    }
+    const individual = serviceIndividual || areaIndividual;
+    const total = servicePrice + areaPrice + optionTotal;
+    const totalText = individual ? "個別見積もり" : yen(total);
+    const serviceText = service?.value || "未選択";
+    const servicePriceText = serviceIndividual ? "個別見積もり" : yen(servicePrice);
+    const areaPriceText = areaIndividual ? "個別見積もり" : yen(areaPrice);
+    const optionPriceText = optionTotal === 0 ? "0円" : `${optionTotal > 0 ? "+" : ""}${optionTotal.toLocaleString()}円`;
 
-    // フォームへの連携 (非表示フィールド)
-    if (hiddenEstimatedTotal) hiddenEstimatedTotal.value = isIndividualEstimate ? "0" : String(total);
-    // These might need adjustment based on the form's actual needs
-    if (formPlan) formPlan.textContent = serviceName; // Repurpose to show selected service
-    if (formItems) formItems.textContent = selectedOptions.join(" / ") || "（オプションなし）"; // Repurpose to show selected options
-    if (formKm) formKm.textContent = areaName; // Repurpose to show selected area
-    if (formTotal) formTotal.textContent = isIndividualEstimate ? "個別見積もり" : total.toLocaleString();
+    latestEstimate = {
+      individual,
+      total,
+      totalText,
+      service: serviceText,
+      servicePriceText,
+      area: areaLabel,
+      areaPriceText,
+      options: selectedOptions,
+      optionPriceText,
+      actualCosts: Array.from(actualCosts),
+    };
 
-    // 依頼フォームボタンの活性化/非活性化 (必要であれば)
-    // 例えば、個別見積もりの場合はボタンを非活性化するなどのロジックを追加可能
+    totalTextEls.forEach((el) => {
+      el.textContent = totalText;
+    });
+    if (selectedSummary) selectedSummary.textContent = `${serviceText} / ${areaLabel}`;
+    if (serviceNameEl) serviceNameEl.textContent = serviceText;
+    if (servicePriceEl) servicePriceEl.textContent = servicePriceText;
+    if (areaPriceEl) areaPriceEl.textContent = areaPriceText;
+    if (optionPriceEl) optionPriceEl.textContent = optionPriceText;
+    if (actualCostsEl) actualCostsEl.textContent = Array.from(actualCosts).join(" / ");
+    if (distanceNote) distanceNote.classList.toggle("hidden", !areaIndividual);
   }
 
-  // イベントリスナーの登録
-  serviceRadios.forEach(radio => radio.addEventListener("change", calculate));
-  areaRadios.forEach(radio => radio.addEventListener("change", calculate));
-  optionCheckboxes.forEach(checkbox => checkbox.addEventListener("change", calculate));
+  function applyEstimateToForm() {
+    if (!latestEstimate) calculate();
+    const estimate = latestEstimate;
+    if (!estimate) return;
 
-  // 初期計算の実行
+    if (formBox) formBox.classList.add("border-orange-300");
+    if (formTitle) formTitle.textContent = "シミュレーター概算";
+    if (formEmpty) formEmpty.classList.add("hidden");
+    formDetails.forEach((el) => el.classList.remove("hidden"));
+    if (formNote) formNote.classList.remove("hidden");
+    if (formService) formService.textContent = estimate.service;
+    if (formArea) formArea.textContent = estimate.area;
+    if (formOptions) formOptions.textContent = estimate.options.join(" / ") || "なし";
+    if (formTotal) formTotal.textContent = estimate.totalText;
+
+    if (hiddenPlan) hiddenPlan.value = estimate.service;
+    if (hiddenSelectedItems) hiddenSelectedItems.value = estimate.options.join(", ");
+    if (hiddenTotalKm) hiddenTotalKm.value = estimate.area;
+    if (hiddenEstimatedTotal) hiddenEstimatedTotal.value = estimate.individual ? "個別見積もり" : String(estimate.total);
+    if (hiddenBreakdownJSON) hiddenBreakdownJSON.value = JSON.stringify(estimate);
+  }
+
+  function fillTestValues() {
+    const form = document.getElementById("form-request");
+    if (!form) return;
+    const values = {
+      name: "山田 太郎",
+      phone: "09012345678",
+      email: "test@example.com",
+      areaPref: "山口県",
+      areaCity: "下関市",
+      specificAddress: "山口県下関市秋根新町",
+      notes: "公開前確認用のテスト入力です。送信はしません。",
+    };
+    Object.entries(values).forEach(([name, value]) => {
+      const field = form.elements[name];
+      if (field) field.value = value;
+    });
+    const contact = form.querySelector('input[name="preferredContactMethod"][value="電話"]');
+    if (contact) contact.checked = true;
+  }
+
+  serviceRadios.forEach((radio) => radio.addEventListener("change", calculate));
+  areaRadios.forEach((radio) => radio.addEventListener("change", calculate));
+  optionCheckboxes.forEach((checkbox) => checkbox.addEventListener("change", calculate));
+  if (distanceInput) distanceInput.addEventListener("input", calculate);
+  consultBtns.forEach((btn) => btn.addEventListener("click", applyEstimateToForm));
+  if (fillTestBtn) fillTestBtn.addEventListener("click", fillTestValues);
+
   calculate();
 });
