@@ -3,15 +3,14 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   const serviceRadios = document.querySelectorAll('input[name="sim-service"]');
-  const areaRadios = document.querySelectorAll('input[name="sim-area"]');
   const optionCheckboxes = document.querySelectorAll('input[name="sim-option"]');
   const distanceInput = document.getElementById("sim-distance-km");
-  const distanceNote = document.getElementById("sim-distance-note");
   const totalTextEls = document.querySelectorAll("[data-sim-total-text]");
   const selectedSummary = document.querySelector("[data-sim-selected-summary]");
   const serviceNameEl = document.querySelector("[data-sim-service-name]");
   const servicePriceEl = document.querySelector("[data-sim-service-price]");
   const areaPriceEl = document.querySelector("[data-sim-area-price]");
+  const distanceFeeEl = document.querySelector("[data-sim-distance-fee]");
   const optionPriceEl = document.querySelector("[data-sim-option-price]");
   const actualCostsEl = document.querySelector("[data-sim-actual-costs]");
   const consultBtns = document.querySelectorAll("#sim-to-request-form, #sim-to-request-form-side, #sim-to-request-form-mobile");
@@ -43,32 +42,54 @@ document.addEventListener("DOMContentLoaded", () => {
     return Array.from(radios).find((radio) => radio.checked);
   }
 
-  function travelFeeFromDistance(rawValue) {
-    if (rawValue === "") return null;
+  function travelFee(rawValue) {
+    if (rawValue === "") {
+      return {
+        label: "出張費は正式見積もり時に確認",
+        distanceFee: 0,
+        total: 0,
+        display: "正式見積もり時に確認",
+        distanceDisplay: "未入力",
+        unknown: true,
+        individual: false,
+      };
+    }
     const km = Number(rawValue);
-    if (!Number.isFinite(km) || km < 0) return null;
-    if (km <= 10) return { label: "片道10km以内", price: 0, individual: false };
-    if (km <= 25) return { label: "片道10km超〜25km", price: 2200, individual: false };
-    if (km <= 50) return { label: "片道25km超〜50km", price: 5500, individual: false };
-    if (km <= 90) return { label: "片道50km超〜90km", price: 8800, individual: false };
-    return { label: "片道90km超", price: 0, individual: true };
+    if (!Number.isFinite(km) || km < 0) {
+      return null;
+    }
+    if (km > 90) {
+      return {
+        label: "片道90km超",
+        distanceFee: 0,
+        total: 0,
+        display: "個別見積もり",
+        distanceDisplay: "個別見積もり",
+        unknown: false,
+        individual: true,
+      };
+    }
+    const distanceFee = km <= 30 ? 0 : Math.ceil(km - 30) * 110;
+    return {
+      label: `片道${km}km`,
+      distanceFee,
+      total: distanceFee,
+      display: `${distanceFee.toLocaleString()}円`,
+      distanceDisplay: `${distanceFee.toLocaleString()}円`,
+      unknown: false,
+      individual: false,
+    };
   }
 
   function calculate() {
     const service = selectedRadio(serviceRadios);
-    const area = selectedRadio(areaRadios);
     const servicePrice = Number(service?.dataset.price || 0);
     const serviceIndividual = service?.dataset.individual === "true";
-    let areaLabel = area?.value || "未選択";
-    let areaPrice = Number(area?.dataset.price || 0);
-    let areaIndividual = area?.dataset.individual === "true";
-    const distanceFee = travelFeeFromDistance(distanceInput?.value || "");
-
-    if (distanceFee) {
-      areaLabel = distanceFee.label;
-      areaPrice = distanceFee.price;
-      areaIndividual = distanceFee.individual;
-    }
+    const trip = travelFee(distanceInput?.value || "");
+    let areaLabel = trip?.label || "出張費は正式見積もり時に確認";
+    let areaPrice = trip?.total || 0;
+    let areaIndividual = trip?.individual || false;
+    let travelUnknown = trip?.unknown || false;
 
     let optionTotal = 0;
     const selectedOptions = [];
@@ -85,12 +106,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    const individual = serviceIndividual || areaIndividual;
+    const individual = serviceIndividual || areaIndividual || travelUnknown;
     const total = servicePrice + areaPrice + optionTotal;
-    const totalText = individual ? "個別見積もり" : yen(total);
+    const totalText = travelUnknown ? "正式見積もり時に確認" : (individual ? "個別見積もり" : yen(total));
     const serviceText = service?.value || "未選択";
-    const servicePriceText = serviceIndividual ? "個別見積もり" : yen(servicePrice);
-    const areaPriceText = areaIndividual ? "個別見積もり" : yen(areaPrice);
+    const servicePriceText = serviceIndividual ? (service?.dataset.display || "個別見積もり") : yen(servicePrice);
+    const areaPriceText = trip?.display || "正式見積もり時に確認";
     const optionPriceText = optionTotal === 0 ? "0円" : `${optionTotal > 0 ? "+" : ""}${optionTotal.toLocaleString()}円`;
 
     latestEstimate = {
@@ -113,9 +134,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (serviceNameEl) serviceNameEl.textContent = serviceText;
     if (servicePriceEl) servicePriceEl.textContent = servicePriceText;
     if (areaPriceEl) areaPriceEl.textContent = areaPriceText;
+    if (distanceFeeEl) distanceFeeEl.textContent = trip?.distanceDisplay || "未入力";
     if (optionPriceEl) optionPriceEl.textContent = optionPriceText;
     if (actualCostsEl) actualCostsEl.textContent = Array.from(actualCosts).join(" / ");
-    if (distanceNote) distanceNote.classList.toggle("hidden", !areaIndividual);
   }
 
   function applyEstimateToForm() {
@@ -136,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (hiddenPlan) hiddenPlan.value = estimate.service;
     if (hiddenSelectedItems) hiddenSelectedItems.value = estimate.options.join(", ");
     if (hiddenTotalKm) hiddenTotalKm.value = estimate.area;
-    if (hiddenEstimatedTotal) hiddenEstimatedTotal.value = estimate.individual ? "個別見積もり" : String(estimate.total);
+    if (hiddenEstimatedTotal) hiddenEstimatedTotal.value = estimate.totalText;
     if (hiddenBreakdownJSON) hiddenBreakdownJSON.value = JSON.stringify(estimate);
   }
 
@@ -149,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
       email: "test@example.com",
       areaPref: "山口県",
       areaCity: "下関市",
-      specificAddress: "山口県下関市秋根新町",
+      specificAddress: "山口県下関市中心部周辺",
       notes: "公開前確認用のテスト入力です。送信はしません。",
     };
     Object.entries(values).forEach(([name, value]) => {
@@ -161,7 +182,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   serviceRadios.forEach((radio) => radio.addEventListener("change", calculate));
-  areaRadios.forEach((radio) => radio.addEventListener("change", calculate));
   optionCheckboxes.forEach((checkbox) => checkbox.addEventListener("change", calculate));
   if (distanceInput) distanceInput.addEventListener("input", calculate);
   consultBtns.forEach((btn) => btn.addEventListener("click", applyEstimateToForm));

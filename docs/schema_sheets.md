@@ -7,7 +7,7 @@
 | timestamp       | 〇   | 2026-03-01T10:00:00Z             | 送信日時                                             |
 | id              | 〇   | REQ-A1B2C3D4                     | 依頼ID                                               |
 | plan            | 〇   | Mプラン（2項目）                 | プラン                                               |
-| selectedItems   | 〇   | 実家の様子見, お墓の簡易清掃     | 選択された項目                                       |
+| selectedItems   | 〇   | 実家の様子見, お墓の清掃         | 選択された項目                                       |
 | areaPref        | 〇   | 山口県                           | 都道府県                                             |
 | areaCity        | 〇   | 下関市                           | 市区町村                                             |
 | specificAddress | 〇   | 〇〇町1-2-3 〇〇霊園             | 具体的な住所・場所                                   |
