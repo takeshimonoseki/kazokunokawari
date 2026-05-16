@@ -16,3 +16,21 @@
 ::1 - - [16/May/2026 19:17:25] "GET /assets/js/forms.js HTTP/1.1" 200 -
 ::1 - - [16/May/2026 19:17:26] code 404, message File not found
 ::1 - - [16/May/2026 19:17:26] "GET /favicon.ico HTTP/1.1" 404 -
+::1 - - [16/May/2026 19:29:38] "GET /index.html HTTP/1.1" 200 -
+::1 - - [16/May/2026 19:29:38] "GET /assets/css/style.css HTTP/1.1" 200 -
+::1 - - [16/May/2026 19:29:38] "GET /assets/js/simulator.js HTTP/1.1" 200 -
+::1 - - [16/May/2026 19:29:38] "GET /assets/js/app.js HTTP/1.1" 200 -
+::1 - - [16/May/2026 19:29:38] "GET /assets/js/forms.js HTTP/1.1" 200 -
+::1 - - [16/May/2026 19:29:39] code 404, message File not found
+::1 - - [16/May/2026 19:29:39] "GET /favicon.ico HTTP/1.1" 404 -
+::1 - - [16/May/2026 19:33:07] "GET /index.html HTTP/1.1" 200 -
+::1 - - [16/May/2026 19:33:07] "GET /assets/css/style.css HTTP/1.1" 200 -
+::1 - - [16/May/2026 19:33:07] "GET /assets/js/app.js HTTP/1.1" 200 -
+::1 - - [16/May/2026 19:33:07] "GET /assets/js/simulator.js HTTP/1.1" 200 -
+::1 - - [16/May/2026 19:33:07] "GET /assets/js/forms.js HTTP/1.1" 200 -
+::1 - - [16/May/2026 19:33:08] code 404, message File not found
+::1 - - [16/May/2026 19:33:08] "GET /favicon.ico HTTP/1.1" 404 -
+::1 - - [16/May/2026 20:16:22] "GET / HTTP/1.1" 200 -
+::1 - - [16/May/2026 20:16:23] "GET /assets/css/style.css HTTP/1.1" 304 -
+::1 - - [16/May/2026 20:16:23] "GET /assets/js/simulator.js HTTP/1.1" 200 -
+::1 - - [16/May/2026 20:16:45] "GET / HTTP/1.1" 304 -
