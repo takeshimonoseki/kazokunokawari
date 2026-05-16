@@ -197,8 +197,14 @@
 
 ## フォーム連携実装ロードマップ
 - [ ] PROJECT_EXECUTION_PLAN.md確認
-- [ ] FORM_GAS_SHEETS_DESIGN.md確認
-- [ ] Sheets列定義確定
+- [x] FORM_GAS_SHEETS_DESIGN.md確認
+- [x] Sheets列定義確定
+- [ ] SHEETS_SETUP_PLAN.md確認
+- [ ] 依頼・相談シート列定義確認
+- [ ] ログシート列定義確認
+- [ ] 設定シート列定義確認
+- [ ] Google Sheets手動作成
+- [ ] Spreadsheet IDをScript Propertiesへ設定
 - [ ] カゾクノカワリ専用Google Sheets作成
 - [ ] カゾクノカワリ専用GAS作成
 - [ ] Script Properties設定

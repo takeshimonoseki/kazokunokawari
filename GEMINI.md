@@ -48,5 +48,7 @@
 - 外部送信・GAS・Sheets・メール通知は明確な依頼まで実行しない
 - 各フェーズ完了時に git status / diff / grep / 検証結果を確認する
 - 秘密情報はdocsやHTML/JSに実値を書かない
+- Sheets作成前に docs/SHEETS_SETUP_PLAN.md を確認する
+- Spreadsheet IDはScript Propertiesで管理する
 - 公開、push、commit、フォーム送信、GAS変更は指示があるまで禁止
 - 内部リンクはローカル確認でも動くように相対パスを使う
