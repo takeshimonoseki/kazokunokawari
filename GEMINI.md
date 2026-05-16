@@ -50,5 +50,8 @@
 - 秘密情報はdocsやHTML/JSに実値を書かない
 - Sheets作成前に docs/SHEETS_SETUP_PLAN.md を確認する
 - Spreadsheet IDはScript Propertiesで管理する
+- GAS実装前に docs/GAS_IMPLEMENTATION_SPEC.md を確認する
+- Script Propertiesに設定する値の実値はdocsやHTML/JSに書かない
+- GAS実装・送信テスト・メール送信は明確な依頼まで行わない
 - 公開、push、commit、フォーム送信、GAS変更は指示があるまで禁止
 - 内部リンクはローカル確認でも動くように相対パスを使う

@@ -201,3 +201,11 @@
 - `docs/db_schema.md` を新しいシート定義に合わせて更新。
 - `docs/TASK_CHECKLIST.md` にSheetsセットアップ関連のタスクを追加。
 - `GEMINI.md` にSheets作成に関する方針を追記。
+
+## 2026-05-16 - GAS実装仕様書作成
+
+### 変更内容
+- フォーム連携のGAS実装前に、`docs/GAS_IMPLEMENTATION_SPEC.md` を新規作成。
+- GASのdoPost仕様、Script Properties、受付番号、二重送信防止、Google Sheets保存、管理者通知、自動返信、エラー処理に関する詳細な仕様を定義。
+- `docs/TASK_CHECKLIST.md` にGAS実装仕様関連のタスクを追加。
+- `GEMINI.md` にGAS実装に関する方針を追記。

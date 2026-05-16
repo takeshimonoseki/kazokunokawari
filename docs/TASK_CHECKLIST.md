@@ -199,10 +199,18 @@
 - [ ] PROJECT_EXECUTION_PLAN.md確認
 - [x] FORM_GAS_SHEETS_DESIGN.md確認
 - [x] Sheets列定義確定
-- [ ] SHEETS_SETUP_PLAN.md確認
-- [ ] 依頼・相談シート列定義確認
-- [ ] ログシート列定義確認
-- [ ] 設定シート列定義確認
+- [x] SHEETS_SETUP_PLAN.md確認
+- [x] 依頼・相談シート列定義確認
+- [x] ログシート列定義確認
+- [x] 設定シート列定義確認
+- [ ] GAS_IMPLEMENTATION_SPEC.md確認
+- [ ] doPost仕様確認
+- [ ] 受付番号仕様確認
+- [ ] idempotencyKey仕様確認
+- [ ] Sheets保存仕様確認
+- [ ] 管理者通知メール仕様確認
+- [ ] 自動返信メール仕様確認
+- [ ] エラー処理仕様確認
 - [ ] Google Sheets手動作成
 - [ ] Spreadsheet IDをScript Propertiesへ設定
 - [ ] カゾクノカワリ専用Google Sheets作成
