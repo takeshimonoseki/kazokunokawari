@@ -341,9 +341,9 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path>
                 </svg>
               </div>
-              <h3 class="text-xl font-bold mb-3 text-slate-800">遺品整理補助・荷物移動</h3>
+              <h3 class="text-xl font-bold mb-3 text-slate-800">実家片付け前の仕分けサポート</h3>
               <p class="text-slate-600 text-sm leading-relaxed">
-                故人のお部屋の片付けや、模様替え・引越しに伴う軽い荷物の運搬、不用品の分別などをお手伝いします。（無理のない範囲）
+                遺品整理業者へ丸投げする前に、自治体回収で安く済むよう、残す物・処分予定の物・確認待ちの物の仕分けをお手伝いします。ビデオ通話で確認しながら、粗大ごみリスト作成や敷地内・玄関先など指定場所までの搬出補助にも対応します。
               </p>
             </div>
           </div>
@@ -394,7 +394,22 @@
                 <span class="text-red-500 shrink-0">×</span>
                 <span><strong>不法侵入</strong>や<strong>許可のない場所への立ち入り</strong></span>
               </li>
+              <li class="flex items-start gap-3">
+                <span class="text-red-500 shrink-0">×</span>
+                <span><strong>一般廃棄物の回収・運搬・処分</strong></span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="text-red-500 shrink-0">×</span>
+                <span><strong>ごみの処分場への持ち込み代行</strong></span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="text-red-500 shrink-0">×</span>
+                <span><strong>回収サービスや積載量・処分費込みに見える作業</strong></span>
+              </li>
             </ul>
+            <p class="mt-6 rounded-xl bg-red-50 border border-red-100 p-4 text-sm font-bold text-red-700 leading-relaxed">
+              当方は一般廃棄物の回収・運搬・処分業者ではありません。ごみの回収、処分場への運搬、処分代行は行っておりません。処分は依頼者様名義での自治体回収申込み、または一般廃棄物収集運搬許可業者への依頼をお願いします。
+            </p>
           </div>
         </div>
       </section>
@@ -414,7 +429,7 @@
           <div class="bg-white rounded-3xl shadow-xl p-6 md:p-10 border-4 border-orange-100">
             <div id="sim-summary" class="mb-8 rounded-2xl bg-orange-100 border-2 border-orange-200 p-5">
               <p class="text-sm font-black text-slate-600 mb-1">現在の概算</p>
-              <p class="text-3xl font-black text-orange-600"><span data-sim-total-text>正式見積もり時に確認</span></p>
+              <p class="sim-total-large"><span data-sim-total-text>正式見積もり時に確認</span></p>
               <p class="text-sm font-bold text-slate-700 mt-2">選択中：<span data-sim-selected-summary>お墓参り代行 / 出張費は正式見積もり時に確認</span></p>
               <p class="text-xs font-bold text-slate-600 mt-2">正式料金は内容確認後に確定します。</p>
             </div>
@@ -489,6 +504,14 @@
                   </span>
                 </label>
                 <label class="sim-choice-card">
+                  <input type="radio" name="sim-service" value="実家片付け前の仕分けサポート 1時間" data-price="3000" class="form-radio h-5 w-5 text-orange-600" />
+                  <span class="ml-3">
+                    <span class="block font-black text-slate-800">実家片付け前の仕分けサポート 1時間</span>
+                    <span class="block text-orange-600 font-black">3,000円〜</span>
+                    <span class="block text-xs text-slate-600 font-bold">残す物・処分予定・確認待ちの仕分け</span>
+                  </span>
+                </label>
+                <label class="sim-choice-card">
                   <input type="radio" name="sim-service" value="小荷物の運搬・荷物移動" data-price="" data-individual="true" data-display="別途見積もり" class="form-radio h-5 w-5 text-orange-600" />
                   <span class="ml-3">
                     <span class="block font-black text-slate-800">小荷物の運搬・荷物移動</span>
@@ -545,6 +568,14 @@
                   <span class="ml-3"><span class="block font-black text-slate-800">追加作業1時間</span><span class="block text-orange-600 font-black">+3,300円</span></span>
                 </label>
                 <label class="sim-choice-card">
+                  <input type="checkbox" name="sim-option" value="ビデオ通話確認" data-price="1000" class="form-checkbox h-5 w-5 text-orange-600" />
+                  <span class="ml-3"><span class="block font-black text-slate-800">ビデオ通話確認</span><span class="block text-orange-600 font-black">+1,000円〜</span></span>
+                </label>
+                <label class="sim-choice-card">
+                  <input type="checkbox" name="sim-option" value="粗大ごみリスト作成" data-price="2000" class="form-checkbox h-5 w-5 text-orange-600" />
+                  <span class="ml-3"><span class="block font-black text-slate-800">粗大ごみリスト作成</span><span class="block text-orange-600 font-black">+2,000円〜</span></span>
+                </label>
+                <label class="sim-choice-card">
                   <input type="checkbox" name="sim-option" value="緊急対応" data-price="3300" class="form-checkbox h-5 w-5 text-orange-600" />
                   <span class="ml-3"><span class="block font-black text-slate-800">緊急対応</span><span class="block text-orange-600 font-black">+3,300円〜</span></span>
                 </label>
@@ -565,6 +596,7 @@
               出張費は、下関市中心部周辺からの片道距離を目安に算出します。<br />
               正確な距離は正式見積もり時にこちらで確認します。<br />
               購入品がある場合は、原則として購入予定額を事前にお預かりします。購入後、レシート等を写真でご報告し、差額がある場合は精算します。<br />
+              ごみの回収・運搬・処分費は含みません。自治体処理券、家電リサイクル料金、許可業者費用は別途実費です。<br />
               「その他・個別相談」「小荷物の運搬・荷物移動」または「片道90km超」を選択した場合、別途個別にお見積もりとなります。
             </p>
 
@@ -580,8 +612,10 @@
               </div>
 
               <aside id="sim-result-card" class="sim-result-card">
-                <p class="text-sm font-black text-slate-600 mb-1">見積もり結果</p>
-                <p class="text-4xl font-black text-orange-600 mb-5"><span data-sim-total-text>正式見積もり時に確認</span></p>
+                <p class="text-sm font-black text-slate-600 mb-1">概算合計</p>
+                <p class="sim-total-large"><span data-sim-total-text>正式見積もり時に確認</span></p>
+                <p class="text-sm font-black text-slate-700 mb-2" data-sim-travel-status>出張費：正式見積もり時に確認</p>
+                <p class="text-xs font-bold text-red-600 mb-5">正式料金は内容確認後に確定します。</p>
                 <div class="space-y-3 text-sm font-bold text-slate-700">
                   <div class="flex justify-between gap-4"><span>選択中のサービス</span><span class="text-right" data-sim-service-name>お墓参り代行</span></div>
                   <div class="flex justify-between gap-4"><span>サービス料金</span><span data-sim-service-price>5,500円〜</span></div>
@@ -593,7 +627,6 @@
                     <p class="text-slate-800" data-sim-actual-costs>購入品そのものの代金 / 高速道路代 / 駐車場代 / 特殊な消耗品</p>
                   </div>
                 </div>
-                <p class="text-xs font-bold text-red-600 mt-5">正式料金は内容確認後に確定します。</p>
                 <div class="mt-5 grid gap-3">
                   <a href="#request-form" id="sim-to-request-form-side" class="bg-orange-500 text-white text-center font-black px-5 py-3 rounded-full hover:bg-orange-600 transition">この内容で相談する</a>
                   <a href="tel:09078834125" class="bg-white text-orange-600 border-2 border-orange-500 text-center font-black px-5 py-3 rounded-full hover:bg-orange-50 transition">電話する</a>
@@ -606,8 +639,9 @@
         </div>
         <div class="sim-mobile-bar" aria-label="概算金額">
           <div>
-            <p class="text-xs font-black text-slate-600">概算金額</p>
-            <p class="text-lg font-black text-orange-600"><span data-sim-total-text>正式見積もり時に確認</span></p>
+            <p class="text-xs font-black text-slate-600">概算</p>
+            <p class="sim-mobile-total"><span data-sim-total-text>正式見積もり時に確認</span></p>
+            <p class="text-xs font-bold text-slate-600" data-sim-mobile-travel-status>出張費は確認</p>
           </div>
           <a href="#sim-result-card" class="text-sm font-black text-slate-700 underline">詳細</a>
           <a href="#request-form" id="sim-to-request-form-mobile" class="bg-orange-500 text-white font-black px-4 py-2 rounded-full text-sm">この内容で相談</a>

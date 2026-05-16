@@ -11,6 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const servicePriceEl = document.querySelector("[data-sim-service-price]");
   const areaPriceEl = document.querySelector("[data-sim-area-price]");
   const distanceFeeEl = document.querySelector("[data-sim-distance-fee]");
+  const travelStatusEls = document.querySelectorAll("[data-sim-travel-status]");
+  const mobileTravelStatusEls = document.querySelectorAll("[data-sim-mobile-travel-status]");
   const optionPriceEl = document.querySelector("[data-sim-option-price]");
   const actualCostsEl = document.querySelector("[data-sim-actual-costs]");
   const consultBtns = document.querySelectorAll("#sim-to-request-form, #sim-to-request-form-side, #sim-to-request-form-mobile");
@@ -31,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const formTotal = document.getElementById("form-sim-total");
   const formNote = document.getElementById("form-sim-note");
 
-  const baseActualCosts = ["購入品そのものの代金", "高速道路代", "駐車場代", "特殊な消耗品"];
+  const baseActualCosts = ["購入品そのものの代金", "高速道路代", "駐車場代", "特殊な消耗品", "自治体処理券", "家電リサイクル料金", "許可業者費用"];
   let latestEstimate = null;
 
   function yen(amount, suffix = "円〜") {
@@ -106,13 +108,15 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    const individual = serviceIndividual || areaIndividual || travelUnknown;
-    const total = servicePrice + areaPrice + optionTotal;
-    const totalText = travelUnknown ? "正式見積もり時に確認" : (individual ? "個別見積もり" : yen(total));
+    const individual = serviceIndividual || areaIndividual;
+    const total = servicePrice + (areaIndividual || travelUnknown ? 0 : areaPrice) + optionTotal;
+    const totalText = serviceIndividual ? (service?.dataset.display || "個別見積もり") : yen(total);
     const serviceText = service?.value || "未選択";
     const servicePriceText = serviceIndividual ? (service?.dataset.display || "個別見積もり") : yen(servicePrice);
     const areaPriceText = trip?.display || "正式見積もり時に確認";
     const optionPriceText = optionTotal === 0 ? "0円" : `${optionTotal > 0 ? "+" : ""}${optionTotal.toLocaleString()}円`;
+    const travelStatusText = `出張費：${areaPriceText}`;
+    const mobileTravelStatusText = travelUnknown ? "出張費は確認" : `出張費 ${areaPriceText}`;
 
     latestEstimate = {
       individual,
@@ -135,6 +139,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (servicePriceEl) servicePriceEl.textContent = servicePriceText;
     if (areaPriceEl) areaPriceEl.textContent = areaPriceText;
     if (distanceFeeEl) distanceFeeEl.textContent = trip?.distanceDisplay || "未入力";
+    travelStatusEls.forEach((el) => {
+      el.textContent = travelStatusText;
+    });
+    mobileTravelStatusEls.forEach((el) => {
+      el.textContent = mobileTravelStatusText;
+    });
     if (optionPriceEl) optionPriceEl.textContent = optionPriceText;
     if (actualCostsEl) actualCostsEl.textContent = Array.from(actualCosts).join(" / ");
   }

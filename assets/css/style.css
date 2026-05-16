@@ -38,6 +38,14 @@
   padding: 1.5rem;
 }
 
+.sim-total-large {
+  margin-bottom: 0.25rem;
+  color: #ea580c;
+  font-size: 2.25rem;
+  line-height: 1.05;
+  font-weight: 900;
+}
+
 .sim-mobile-bar {
   position: fixed;
   left: 0.75rem;
@@ -53,6 +61,13 @@
   border: 2px solid #fed7aa;
   border-radius: 1rem;
   box-shadow: 0 12px 32px rgba(15, 23, 42, 0.18);
+}
+
+.sim-mobile-total {
+  color: #ea580c;
+  font-size: 1.25rem;
+  line-height: 1.15;
+  font-weight: 900;
 }
 
 .required-badge {
