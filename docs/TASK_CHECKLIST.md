@@ -5,6 +5,15 @@
 - [x] docs/HP_SPEC.md 更新
 - [x] docs/TASK_CHECKLIST.md 更新 (現在進行中)
 - [ ] docs/CHANGELOG_HP.md 更新
+- [ ] FORM_GAS_SHEETS_DESIGN.md確認
+- [ ] Sheets列定義確定
+- [ ] 管理者通知メール文面確定
+- [ ] 自動返信メール文面確定
+- [ ] カゾクノカワリ専用GAS作成
+- [ ] Script Properties設定
+- [ ] フロント送信処理接続
+- [ ] テスト送信
+- [ ] 本番前確認
 
 ## 1-2. トップページ訴求整理
 - [ ] 主対象を「下関を離れて暮らすご家族」としてファーストビューに明示
@@ -185,3 +194,19 @@
 - [ ] grep -R "TODO: 本番公開前にテスト入力ボタン" -n index.html
 - [ ] grep -R "TODO: 特定商取引法上の住所表示" -n sct.html
 - [ ] grep -R 'href="/|src="/|action="/' -n *.html assets/js
+
+## フォーム連携実装ロードマップ
+- [ ] PROJECT_EXECUTION_PLAN.md確認
+- [ ] FORM_GAS_SHEETS_DESIGN.md確認
+- [ ] Sheets列定義確定
+- [ ] カゾクノカワリ専用Google Sheets作成
+- [ ] カゾクノカワリ専用GAS作成
+- [ ] Script Properties設定
+- [ ] GAS doPost実装
+- [ ] 管理者通知メール実装
+- [ ] 自動返信メール実装
+- [ ] forms.js接続
+- [ ] テスト送信
+- [ ] Sheets保存確認
+- [ ] 通知確認
+- [ ] 公開前確認

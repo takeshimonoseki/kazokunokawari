@@ -1,5 +1,5 @@
 // GAS WebApp URL (デプロイ後にここを書き換える)
-const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycby75uR-03pmmMZPJJ5gcIsUM4HVKGxFAssCu6XZXiSsRiXEen2LEcK6kGHgA67KtHH2Mg/exec";
+const GAS_WEBAPP_URL = ""; // 現在、フォーム連携は設計段階のためURLは空です。
 
 document.addEventListener("DOMContentLoaded", () => {
   const loadedAt = Date.now();
@@ -8,6 +8,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const handleFormSubmit = async (e, formElement) => {
     e.preventDefault();
+
+    const submitBtn = formElement.querySelector('button[type="submit"]');
+    const btnText = submitBtn.querySelector("span") || submitBtn;
+    const originalText = btnText.textContent;
+
+    // フォーム連携が準備できていない場合は送信しない
+    if (!GAS_WEBAPP_URL) {
+      alert("現在、フォーム送信は準備中です。今しばらくお待ちください。");
+      // Reset button if it was disabled
+      submitBtn.disabled = false;
+      submitBtn.classList.remove("opacity-75", "cursor-not-allowed");
+      btnText.textContent = originalText;
+      return;
+    }
 
     // 1. スパム対策: 3秒未満の送信は拒否
     if (Date.now() - loadedAt < 3000) {
@@ -21,10 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Bot detected");
       return;
     }
-
-    const submitBtn = formElement.querySelector('button[type="submit"]');
-    const btnText = submitBtn.querySelector("span") || submitBtn;
-    const originalText = btnText.textContent;
 
     // Disable button
     submitBtn.disabled = true;

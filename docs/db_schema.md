@@ -1,6 +1,6 @@
 # Google Sheets DB Schema
 
-Spreadsheet ID: `1mEPSJsN0Pt1GULgLIBqQXyUQg-L7a4QCvSLMvADejN8`
+Spreadsheet ID: `未設定（Script Propertiesで管理）`
 
 以下のタブ（シート）を作成し、1行目にヘッダーを設定してください。
 
