@@ -34,3 +34,17 @@
 ::1 - - [16/May/2026 20:16:23] "GET /assets/css/style.css HTTP/1.1" 304 -
 ::1 - - [16/May/2026 20:16:23] "GET /assets/js/simulator.js HTTP/1.1" 200 -
 ::1 - - [16/May/2026 20:16:45] "GET / HTTP/1.1" 304 -
+::1 - - [16/May/2026 20:26:57] "GET / HTTP/1.1" 200 -
+::1 - - [16/May/2026 20:26:57] "GET /assets/css/style.css HTTP/1.1" 200 -
+::1 - - [16/May/2026 20:26:57] "GET /assets/js/simulator.js HTTP/1.1" 200 -
+::1 - - [16/May/2026 20:26:57] "GET /assets/js/app.js HTTP/1.1" 200 -
+::1 - - [16/May/2026 20:26:57] "GET /assets/js/forms.js HTTP/1.1" 200 -
+::1 - - [16/May/2026 20:26:58] code 404, message File not found
+::1 - - [16/May/2026 20:26:58] "GET /favicon.ico HTTP/1.1" 404 -
+::1 - - [16/May/2026 20:28:35] "GET /thanks.html?type=request HTTP/1.1" 200 -
+::1 - - [16/May/2026 20:28:40] "GET /index.html HTTP/1.1" 200 -
+::1 - - [16/May/2026 20:38:57] "GET /index.html HTTP/1.1" 200 -
+::1 - - [16/May/2026 20:38:57] "GET /assets/css/style.css HTTP/1.1" 304 -
+::1 - - [16/May/2026 20:38:58] "GET /assets/js/simulator.js HTTP/1.1" 200 -
+::1 - - [16/May/2026 20:39:13] "GET /index.html HTTP/1.1" 304 -
+::1 - - [16/May/2026 20:39:13] "GET /assets/js/simulator.js HTTP/1.1" 304 -

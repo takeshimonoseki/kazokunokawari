@@ -4,12 +4,15 @@
 document.addEventListener("DOMContentLoaded", () => {
   const serviceRadios = document.querySelectorAll('input[name="sim-service"]');
   const optionCheckboxes = document.querySelectorAll('input[name="sim-option"]');
+  const visitAreaSelect = document.getElementById("sim-visit-area");
   const visitPlaceInput = document.getElementById("sim-visit-place");
   const totalTextEls = document.querySelectorAll("[data-sim-total-text]");
   const selectedSummary = document.querySelector("[data-sim-selected-summary]");
   const serviceNameEl = document.querySelector("[data-sim-service-name]");
   const servicePriceEl = document.querySelector("[data-sim-service-price]");
   const areaPriceEl = document.querySelector("[data-sim-area-price]");
+  const visitAreaEls = document.querySelectorAll("[data-sim-visit-area]");
+  const visitAreaDescriptionEl = document.querySelector("[data-sim-visit-area-description]");
   const visitPlaceEls = document.querySelectorAll("[data-sim-visit-place]");
   const visitAdjustmentEls = document.querySelectorAll("[data-sim-visit-adjustment]");
   const mobileVisitAdjustmentEls = document.querySelectorAll("[data-sim-mobile-visit-adjustment]");
@@ -28,6 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const formEmpty = document.getElementById("form-sim-empty");
   const formDetails = document.querySelectorAll("[data-form-sim-detail]");
   const formService = document.getElementById("form-sim-plan");
+  const formVisitArea = document.getElementById("form-sim-area");
   const formArea = document.getElementById("form-sim-km");
   const formOptions = document.getElementById("form-sim-items");
   const formTotal = document.getElementById("form-sim-total");
@@ -49,8 +53,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const service = selectedRadio(serviceRadios);
     const servicePrice = Number(service?.dataset.price || 0);
     const serviceIndividual = service?.dataset.individual === "true";
+    const selectedVisitArea = visitAreaSelect?.selectedOptions?.[0];
+    const visitArea = selectedVisitArea?.value || "下関市内・近隣エリア";
+    const visitAreaPrice = Number(selectedVisitArea?.dataset.price || 0);
+    const visitAreaIndividual = selectedVisitArea?.dataset.individual === "true";
+    const visitAreaDescription = selectedVisitArea?.dataset.description || "";
     const visitPlace = visitPlaceInput?.value.trim() || "未入力";
-    const visitAdjustmentText = "確認後にご案内";
+    const visitAdjustmentText = selectedVisitArea?.dataset.display || "基本料金内";
 
     let optionTotal = 0;
     const selectedOptions = [];
@@ -67,15 +76,18 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    const individual = serviceIndividual;
-    const total = servicePrice + optionTotal;
-    const totalText = serviceIndividual ? (service?.dataset.display || "個別見積もり") : yen(total);
+    const individual = serviceIndividual || visitAreaIndividual;
+    const baseTotal = servicePrice + optionTotal;
+    const total = baseTotal + (visitAreaIndividual ? 0 : visitAreaPrice);
+    const totalText = serviceIndividual
+      ? (service?.dataset.display || "個別見積もり")
+      : (visitAreaIndividual ? `サービス・オプション目安 ${yen(baseTotal)}` : yen(total));
     const serviceText = service?.value || "未選択";
     const servicePriceText = serviceIndividual ? (service?.dataset.display || "個別見積もり") : yen(servicePrice);
     const areaPriceText = visitAdjustmentText;
     const optionPriceText = optionTotal === 0 ? "0円" : `${optionTotal > 0 ? "+" : ""}${optionTotal.toLocaleString()}円`;
     const visitAdjustmentStatusText = `訪問場所調整：${visitAdjustmentText}`;
-    const mobileVisitAdjustmentStatusText = "訪問場所調整：確認後にご案内";
+    const mobileVisitAdjustmentStatusText = `訪問場所調整 ${visitAdjustmentText}`;
 
     latestEstimate = {
       individual,
@@ -83,8 +95,9 @@ document.addEventListener("DOMContentLoaded", () => {
       totalText,
       service: serviceText,
       servicePriceText,
-      area: visitPlace,
+      area: visitArea,
       areaPriceText,
+      visitArea,
       visitPlace,
       visitAdjustmentText,
       options: selectedOptions,
@@ -95,10 +108,14 @@ document.addEventListener("DOMContentLoaded", () => {
     totalTextEls.forEach((el) => {
       el.textContent = totalText;
     });
-    if (selectedSummary) selectedSummary.textContent = `${serviceText} / 訪問場所：${visitPlace}`;
+    if (selectedSummary) selectedSummary.textContent = `${serviceText} / ${visitArea}`;
     if (serviceNameEl) serviceNameEl.textContent = serviceText;
     if (servicePriceEl) servicePriceEl.textContent = servicePriceText;
     if (areaPriceEl) areaPriceEl.textContent = areaPriceText;
+    visitAreaEls.forEach((el) => {
+      el.textContent = visitArea;
+    });
+    if (visitAreaDescriptionEl) visitAreaDescriptionEl.textContent = visitAreaDescription;
     visitPlaceEls.forEach((el) => {
       el.textContent = visitPlace;
     });
@@ -123,6 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
     formDetails.forEach((el) => el.classList.remove("hidden"));
     if (formNote) formNote.classList.remove("hidden");
     if (formService) formService.textContent = estimate.service;
+    if (formVisitArea) formVisitArea.textContent = estimate.visitArea;
     if (formArea) formArea.textContent = estimate.visitPlace;
     if (formOptions) formOptions.textContent = estimate.options.join(" / ") || "なし";
     if (formTotal) formTotal.textContent = estimate.totalText;
@@ -157,6 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   serviceRadios.forEach((radio) => radio.addEventListener("change", calculate));
   optionCheckboxes.forEach((checkbox) => checkbox.addEventListener("change", calculate));
+  if (visitAreaSelect) visitAreaSelect.addEventListener("change", calculate);
   if (visitPlaceInput) visitPlaceInput.addEventListener("input", calculate);
   consultBtns.forEach((btn) => btn.addEventListener("click", applyEstimateToForm));
   if (fillTestBtn) fillTestBtn.addEventListener("click", fillTestValues);
