@@ -61,6 +61,9 @@
 - gas/sheets-setup は初期セットアップ用、gas/form-submit はフォーム送信用として分ける
 - gas/form-submit の外部反映は scripts/push-form-submit.sh を使う
 - FORM_SCRIPT_URL / FORM_SCRIPT_ID は .env.local に置き、Gitに入れない
+- GAS単体テストは scripts/test-form-submit.sh を使う
+- GAS_WEBAPP_URL は .env.local のみに保存する
+- テスト送信は明確な依頼があるまで実行しない
 - Script Propertiesに設定する値の実値はdocsやHTML/JSに書かない
 - GAS実装・送信テスト・メール送信は明確な依頼まで行わない
 - フォーム送信GASのpush、Webアプリデプロイ、送信テストは明確な依頼まで行わない
