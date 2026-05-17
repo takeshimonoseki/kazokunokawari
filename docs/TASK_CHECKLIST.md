@@ -196,31 +196,38 @@
 - [ ] grep -R 'href="/|src="/|action="/' -n *.html assets/js
 
 ## フォーム連携実装ロードマップ
-- [ ] PROJECT_EXECUTION_PLAN.md確認
+- [x] PROJECT_EXECUTION_PLAN.md確認
 - [x] FORM_GAS_SHEETS_DESIGN.md確認
 - [x] Sheets列定義確定
 - [x] SHEETS_SETUP_PLAN.md確認
 - [x] 依頼・相談シート列定義確認
 - [x] ログシート列定義確認
 - [x] 設定シート列定義確認
-- [ ] GAS_IMPLEMENTATION_SPEC.md確認
-- [ ] doPost仕様確認
-- [ ] 受付番号仕様確認
-- [ ] idempotencyKey仕様確認
-- [ ] Sheets保存仕様確認
-- [ ] 管理者通知メール仕様確認
+- [x] GAS_IMPLEMENTATION_SPEC.md確認
+- [x] doPost仕様確認
+- [x] 受付番号仕様確認
+- [x] idempotencyKey仕様確認
+- [x] Sheets保存仕様確認
+- [x] 管理者通知メール仕様確認
 - [ ] 自動返信メール仕様確認
-- [ ] エラー処理仕様確認
-- [ ] Google Sheets手動作成
-- [ ] Spreadsheet IDをScript Propertiesへ設定
-- [ ] カゾクノカワリ専用Google Sheets作成
-- [ ] カゾクノカワリ専用GAS作成
-- [ ] Script Properties設定
-- [ ] GAS doPost実装
-- [ ] 管理者通知メール実装
+- [x] エラー処理仕様確認
+- [x] Google Sheets手動作成
+- [x] Spreadsheet IDをScript Propertiesへ設定
+- [x] カゾクノカワリ専用Google Sheets作成
+- [x] カゾクノカワリ専用GAS作成
+- [x] Script Properties設定
+- [x] GAS doPost実装
+- [x] 管理者通知メール実装
 - [ ] 自動返信メール実装
-- [ ] forms.js接続
-- [ ] テスト送信
-- [ ] Sheets保存確認
-- [ ] 通知確認
-- [ ] 公開前確認
+- [x] forms.js接続
+- [x] テスト送信
+- [x] Sheets保存確認
+- [x] 通知確認
+- [x] 公開前確認
+- [x] GitHub Pages公開成功
+- [x] 本番フォーム送信成功
+- [x] Sheets「依頼・相談」への登録成功
+- [x] Sheets「ログ」ERRORなし
+- [x] 管理者メール着信成功
+- [ ] LINE通知実装
+- [ ] テストデータ整理

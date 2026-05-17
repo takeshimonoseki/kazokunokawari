@@ -209,3 +209,14 @@
 - GASのdoPost仕様、Script Properties、受付番号、二重送信防止、Google Sheets保存、管理者通知、自動返信、エラー処理に関する詳細な仕様を定義。
 - `docs/TASK_CHECKLIST.md` にGAS実装仕様関連のタスクを追加。
 - `GEMINI.md` にGAS実装に関する方針を追記。
+
+## 2026-05-17 - 本番フォーム連携完了
+
+### 完了内容
+- GitHub Pages公開成功を確認。
+- 本番フォーム送信成功を確認。
+- Google Sheets「依頼・相談」への登録成功を確認。
+- Google Sheets「ログ」にERRORがないことを確認。
+- 管理者メール通知の着信成功を確認。
+- 次フェーズはLINE通知実装。
+- テストデータ整理は別タスクとして扱う。
