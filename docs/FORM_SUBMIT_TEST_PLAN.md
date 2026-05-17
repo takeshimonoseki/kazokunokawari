@@ -27,7 +27,9 @@
 1. `.env.local` に `GAS_WEBAPP_URL` を設定する
 2. `scripts/test-form-submit.sh` を実行する
 3. 確認プロンプトを読んで、明確に送信してよい場合だけ続行する
-4. レスポンスJSONを `logs/form-submit-test_YYYYMMDD_HHMMSS.json` で確認する
+4. HTTPステータスを `logs/form-submit-test_YYYYMMDD_HHMMSS.status` で確認する
+5. レスポンスヘッダーを `logs/form-submit-test_YYYYMMDD_HHMMSS.headers` で確認する
+6. レスポンス本文を `logs/form-submit-test_YYYYMMDD_HHMMSS.body` で確認する
 
 ## 確認すること
 - レスポンスJSONで受付完了またはエラー内容が確認できること
@@ -35,9 +37,13 @@
 - 希望内容が「GAS単体テスト」になっていること
 - ログシートに処理結果が記録されていること
 - 管理者メール送信結果が記録されていること
+- GAS側処理成功とcurlレスポンス取得は別問題として確認すること
+- Sheetsに行が追加されていれば、POST処理自体はGASへ到達している
 
 ## エラー時に見るもの
-- `logs/form-submit-test_YYYYMMDD_HHMMSS.json`
+- `logs/form-submit-test_YYYYMMDD_HHMMSS.status`
+- `logs/form-submit-test_YYYYMMDD_HHMMSS.headers`
+- `logs/form-submit-test_YYYYMMDD_HHMMSS.body`
 - Apps Scriptの実行ログ
 - Script Propertiesの設定値
 - Google Sheetsの「ログ」シート

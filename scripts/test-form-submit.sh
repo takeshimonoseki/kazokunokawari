@@ -35,7 +35,9 @@ fi
 mkdir -p "${LOG_DIR}"
 
 timestamp="$(date '+%Y%m%d_%H%M%S')"
-response_file="${LOG_DIR}/form-submit-test_${timestamp}.json"
+status_file="${LOG_DIR}/form-submit-test_${timestamp}.status"
+headers_file="${LOG_DIR}/form-submit-test_${timestamp}.headers"
+body_file="${LOG_DIR}/form-submit-test_${timestamp}.body"
 payload_file="$(mktemp)"
 trap 'rm -f "${payload_file}"' EXIT
 
@@ -75,15 +77,20 @@ case "${answer}" in
     ;;
 esac
 
+curl_exit_code=0
 curl \
-  --location \
   --silent \
   --show-error \
-  --fail-with-body \
   --request POST \
   --header "Content-Type: application/json" \
   --data-binary @"${payload_file}" \
-  --output "${response_file}" \
-  "${GAS_WEBAPP_URL}"
+  --dump-header "${headers_file}" \
+  --output "${body_file}" \
+  --write-out "%{http_code}" \
+  "${GAS_WEBAPP_URL}" > "${status_file}" || curl_exit_code=$?
 
-echo "レスポンスを保存しました: ${response_file}"
+echo "curl終了コード: ${curl_exit_code}"
+echo "HTTPステータス: $(cat "${status_file}")"
+echo "body保存先: ${body_file}"
+echo "headers保存先: ${headers_file}"
+echo "Sheetsにテスト行が増えているか確認してください。"
