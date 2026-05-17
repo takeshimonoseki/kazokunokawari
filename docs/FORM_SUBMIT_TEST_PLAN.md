@@ -24,13 +24,13 @@
 4. レスポンスJSONを `logs/form-submit-test_YYYYMMDD_HHMMSS.json` で確認する
 
 ## 確認すること
-- レスポンスJSONで受付成功またはエラー内容が確認できること
+- レスポンスJSONで受付完了またはエラー内容が確認できること
 - 「依頼・相談」シートに受付種別「テスト」として保存されていること
 - 希望内容が「GAS単体テスト」になっていること
 - ログシートに処理結果が記録されていること
 - 管理者メール送信結果が記録されていること
 
-## 失敗時に見るもの
+## エラー時に見るもの
 - `logs/form-submit-test_YYYYMMDD_HHMMSS.json`
 - Apps Scriptの実行ログ
 - Script Propertiesの設定値

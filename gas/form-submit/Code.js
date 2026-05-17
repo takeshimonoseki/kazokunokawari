@@ -3,7 +3,11 @@ const LOG_SHEET_NAME = 'ログ';
 const DEFAULT_FROM_NAME = 'カゾクノカワリ';
 const DEFAULT_REQUEST_TYPE = '相談';
 const DEFAULT_STATUS = '新規';
-const LINE_NOTIFY_STATUS = 'N/A';
+const MAIL_STATUS_PENDING = '未送信';
+const MAIL_STATUS_SENT = '送信済み';
+const MAIL_STATUS_SKIP = '送信しない';
+const MAIL_STATUS_ERROR = 'エラー';
+const LINE_NOTIFY_STATUS = MAIL_STATUS_SKIP;
 
 function doPost(e) {
   let payload = null;
@@ -26,8 +30,8 @@ function doPost(e) {
     });
 
     const notificationResult = {
-      adminMailStatus: 'N/A',
-      autoReplyStatus: 'N/A',
+      adminMailStatus: MAIL_STATUS_PENDING,
+      autoReplyStatus: MAIL_STATUS_PENDING,
       lineNotifyStatus: LINE_NOTIFY_STATUS,
       errorMessage: '',
     };
@@ -37,9 +41,9 @@ function doPost(e) {
       notificationResult.adminMailStatus = adminMailStatus;
       appendLogRow_(spreadsheet, 'INFO', '管理者メール送信', receiptNumber, `管理者通知メール送信結果: ${adminMailStatus}`, {});
     } catch (error) {
-      notificationResult.adminMailStatus = '失敗';
+      notificationResult.adminMailStatus = MAIL_STATUS_ERROR;
       notificationResult.errorMessage = appendErrorMessage_(notificationResult.errorMessage, error);
-      appendLogRow_(spreadsheet, 'ERROR', '管理者メール送信', receiptNumber, '管理者通知メールの送信に失敗しました。', errorToDetail_(error));
+      appendLogRow_(spreadsheet, 'ERROR', '管理者メール送信', receiptNumber, '管理者通知メールの送信でエラーが発生しました。', errorToDetail_(error));
     }
 
     try {
@@ -47,9 +51,9 @@ function doPost(e) {
       notificationResult.autoReplyStatus = autoReplyStatus;
       appendLogRow_(spreadsheet, 'INFO', '自動返信メール送信', receiptNumber, `自動返信メール送信結果: ${autoReplyStatus}`, {});
     } catch (error) {
-      notificationResult.autoReplyStatus = '失敗';
+      notificationResult.autoReplyStatus = MAIL_STATUS_ERROR;
       notificationResult.errorMessage = appendErrorMessage_(notificationResult.errorMessage, error);
-      appendLogRow_(spreadsheet, 'ERROR', '自動返信メール送信', receiptNumber, '自動返信メールの送信に失敗しました。', errorToDetail_(error));
+      appendLogRow_(spreadsheet, 'ERROR', '自動返信メール送信', receiptNumber, '自動返信メールの送信でエラーが発生しました。', errorToDetail_(error));
     }
 
     updateNotificationStatus_(spreadsheet, requestRow, notificationResult);
@@ -174,8 +178,8 @@ function appendRequestRow_(spreadsheet, payload, receiptNumber) {
     getValue_(payload, ['流入元ページ', 'sourcePage', 'referrer']),
     DEFAULT_STATUS,
     '',
-    'N/A',
-    'N/A',
+    MAIL_STATUS_PENDING,
+    MAIL_STATUS_PENDING,
     LINE_NOTIFY_STATUS,
     '',
     JSON.stringify(payload),
@@ -203,7 +207,7 @@ function appendLogRow_(spreadsheet, level, process, receiptNumber, message, deta
 
 function sendAdminMail_(config, payload, receiptNumber) {
   if (!config.adminEmail) {
-    return 'N/A';
+    return MAIL_STATUS_SKIP;
   }
 
   const subject = `【カゾクノカワリ】新規相談・依頼：受付番号 ${receiptNumber}`;
@@ -239,12 +243,12 @@ function sendAdminMail_(config, payload, receiptNumber) {
     name: config.fromName,
   });
 
-  return '成功';
+  return MAIL_STATUS_SENT;
 }
 
 function maybeSendAutoReply_(config, payload, receiptNumber) {
   if (!config.enableAutoReply) {
-    return 'N/A';
+    return MAIL_STATUS_SKIP;
   }
 
   const email = getValue_(payload, ['メールアドレス', 'email']);
@@ -275,7 +279,7 @@ function maybeSendAutoReply_(config, payload, receiptNumber) {
     name: config.fromName,
   });
 
-  return '成功';
+  return MAIL_STATUS_SENT;
 }
 
 function updateNotificationStatus_(spreadsheet, rowNumber, result) {
