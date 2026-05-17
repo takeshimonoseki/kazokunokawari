@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const buildRequestPayload = (values) => {
     const visitArea = [values.areaPref, values.areaCity].filter(Boolean).join(" ");
-    const selectedService = values.preferredService || values.selectedItems || values.plan;
+    const selectedService = values.preferredService || values.selectedItems || values.plan || "その他・個別相談";
     const sourcePage = `${window.location.pathname}${window.location.search}`;
 
     return {
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
       電話番号: values.phone || "",
       メールアドレス: values.email || "",
       希望連絡方法: values.preferredContactMethod || "",
-      希望サービス: selectedService || "",
+      希望サービス: selectedService,
       訪問エリア: visitArea || "",
       詳しい訪問場所: values.specificAddress || "",
       訪問場所調整: values.totalKm || "",

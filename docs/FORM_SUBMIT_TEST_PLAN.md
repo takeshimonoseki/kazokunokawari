@@ -36,6 +36,8 @@
 2. `assets/js/form-config.js` はGitに入れない
 3. ローカルサーバーで確認する
 4. `file://` では確認しない
+5. フロント送信では「希望サービス」が必須
+6. 希望サービスが空の場合は「その他・個別相談」として送る
 
 ## curl設定
 - Apps ScriptのContentServiceが302で `script.googleusercontent.com` へリダイレクトするのは正常
