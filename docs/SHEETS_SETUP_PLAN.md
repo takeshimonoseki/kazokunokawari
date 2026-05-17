@@ -124,6 +124,11 @@ Google Sheetsを手動で作成する手順を具体的に示す。
 -   `scripts/setup-sheets.sh` が `SPREADSHEET_URL` からIDを自動抽出する
 -   `.env.local` はGitに入れない
 -   本番GAS実行時はScript Propertiesで `SPREADSHEET_ID` を管理する
+-   `setupKazokunokawariSheets` はヘッダー、列幅、フィルタ、プルダウンなど管理表の見た目も整える
+-   空の「シート1」「Sheet1」は安全条件を満たす場合のみ削除する
+-   データがあるシートは削除しない
+-   プルダウンはまず2〜200行に限定する
+-   古い不要シートが残る場合は、空であることを確認してから整理する
 
 ## 今回はやらないこと
 -   Google Sheets作成
