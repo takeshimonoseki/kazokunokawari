@@ -78,10 +78,13 @@ case "${answer}" in
 esac
 
 curl_exit_code=0
+# Apps Script ContentServiceは302でgoogleusercontentへ移動する。
+# --request POSTを指定するとリダイレクト先にもPOSTし405になりやすい。
+# --data-binaryだけで初回POSTになる。
 curl \
+  --location \
   --silent \
   --show-error \
-  --request POST \
   --header "Content-Type: application/json" \
   --data-binary @"${payload_file}" \
   --dump-header "${headers_file}" \

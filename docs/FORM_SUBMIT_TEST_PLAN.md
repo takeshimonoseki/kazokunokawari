@@ -31,6 +31,11 @@
 5. レスポンスヘッダーを `logs/form-submit-test_YYYYMMDD_HHMMSS.headers` で確認する
 6. レスポンス本文を `logs/form-submit-test_YYYYMMDD_HHMMSS.body` で確認する
 
+## curl設定
+- Apps ScriptのContentServiceが302で `script.googleusercontent.com` へリダイレクトするのは正常
+- curlでは `--location` を使ってリダイレクト後の本文を取得する
+- `--request POST` は使わず、`--data-binary` で初回リクエストをPOSTにする
+
 ## 確認すること
 - レスポンスJSONで受付完了またはエラー内容が確認できること
 - 「依頼・相談」シートに受付種別「テスト」として保存されていること
