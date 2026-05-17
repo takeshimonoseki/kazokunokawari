@@ -33,11 +33,16 @@
 
 ## フロント接続確認
 1. フロント接続後は `scripts/generate-form-config.sh` を実行する
-2. `assets/js/form-config.js` はGitに入れない
+2. ローカル確認では `.env.local` から `assets/js/form-config.js` を生成する
 3. ローカルサーバーで確認する
 4. `file://` では確認しない
 5. フロント送信では「希望サービス」が必須
 6. 希望サービスが空の場合は「その他・個別相談」として送る
+
+## GitHub Pages本番設定
+- GitHub Pages本番では `assets/js/form-config.js` に公開用GAS WebアプリURLを設定する
+- GAS WebアプリURLは公開前提
+- Spreadsheet ID、Script ID、メールアドレス、LINEトークンは絶対に入れない
 
 ## curl設定
 - Apps ScriptのContentServiceが302で `script.googleusercontent.com` へリダイレクトするのは正常
