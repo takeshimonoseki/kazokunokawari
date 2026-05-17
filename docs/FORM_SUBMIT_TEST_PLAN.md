@@ -31,6 +31,12 @@
 5. レスポンスヘッダーを `logs/form-submit-test_YYYYMMDD_HHMMSS.headers` で確認する
 6. レスポンス本文を `logs/form-submit-test_YYYYMMDD_HHMMSS.body` で確認する
 
+## フロント接続確認
+1. フロント接続後は `scripts/generate-form-config.sh` を実行する
+2. `assets/js/form-config.js` はGitに入れない
+3. ローカルサーバーで確認する
+4. `file://` では確認しない
+
 ## curl設定
 - Apps ScriptのContentServiceが302で `script.googleusercontent.com` へリダイレクトするのは正常
 - curlでは `--location` を使ってリダイレクト後の本文を取得する

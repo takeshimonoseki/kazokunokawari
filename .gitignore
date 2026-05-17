@@ -3,3 +3,4 @@ tmp/
 .clasp.json
 **/.clasp.json
 logs/
+assets/js/form-config.js
