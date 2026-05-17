@@ -77,7 +77,7 @@
 
 `KZK-YYYYMMDD-HHmmss-XXXX`
 
-例: `KZK-20260516-143059-A1B2` (YYYYMMDD: 年月日, HHmmss: 時分秒, XXXX: 4桁のランダムな英数字)
+`XXXX` は4桁のランダム数字とする。
 
 ## idempotencyKey仕様
 -   フロントエンド側で送信前に一意の`idempotencyKey`を生成し、リクエストに含めて送信する。
@@ -196,8 +196,7 @@ JSON形式で`500 Internal Server Error`または`400 Bad Request`を返す。
 -   `GAS_ENV` Script Propertyが`development`の場合、失敗レスポンスに`details`フィールドを含めることでデバッグを容易にする。
 
 ## 今回は実装しないこと
--   GASファイル作成
--   GASファイル編集 (既存gasフォルダ内のファイルを含む)
+-   外部環境へのGAS反映
 -   Google Sheets作成
 -   Script Properties設定
 -   GASデプロイ
@@ -208,4 +207,12 @@ JSON形式で`500 Internal Server Error`または`400 Bad Request`を返す。
 -   ファイルアップロード
 
 ## 次の最小タスク
-GAS実装に入る前に、docs/GAS_IMPLEMENTATION_SPEC.md を確認し、問題がなければ専用Google Sheetsを手動作成する。
+ローカル実装した `gas/form-submit` を外部反映する前に、Script Propertiesの設定項目と送信テスト手順を確認する。
+
+## ローカル実装メモ
+-   `gas/form-submit` はフォーム送信用GAS本体を置くディレクトリとする
+-   初回はローカル実装のみ行い、`clasp push`、Webアプリデプロイ、送信テストは別工程にする
+-   使用前にScript Propertiesへ `SPREADSHEET_ID`、`ADMIN_EMAIL`、`FROM_NAME`、`ENABLE_AUTO_REPLY` を設定する
+-   `ENABLE_AUTO_REPLY` が `true` の場合のみ自動返信メールを送る
+-   `ENABLE_LINE_NOTIFY` は将来用の設定として保持するが、初期実装ではLINE通知は行わない
+-   `gas/sheets-setup` はシート初期セットアップ用、`gas/form-submit` はフォーム送信用として分けて管理する

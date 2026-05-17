@@ -129,10 +129,13 @@ Google Sheetsを手動で作成する手順を具体的に示す。
 -   データがあるシートは削除しない
 -   プルダウンはまず2〜200行に限定する
 -   古い不要シートが残る場合は、空であることを確認してから整理する
+-   `gas/form-submit` はフォーム送信用GAS本体として、将来的に「依頼・相談」シートへ送信内容を保存する
+-   フォーム送信用GASを使う前にScript Propertiesへ `SPREADSHEET_ID`、`ADMIN_EMAIL`、`FROM_NAME`、`ENABLE_AUTO_REPLY` を設定する
+-   Webアプリデプロイと送信テストは別工程で行う
 
 ## 今回はやらないこと
 -   Google Sheets作成
--   フォーム連携GAS本体作成
+-   フォーム連携GAS本体の外部反映
 -   GASデプロイ
 -   Script Properties設定
 -   フォーム送信

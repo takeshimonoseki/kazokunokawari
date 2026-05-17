@@ -57,6 +57,8 @@
 - データが入っているシートは削除しない
 - セットアップ関数は再実行しても既存データを壊さないようにする
 - GAS実装前に docs/GAS_IMPLEMENTATION_SPEC.md を確認する
+- フォーム送信GAS本体は gas/form-submit に置く
+- gas/sheets-setup は初期セットアップ用、gas/form-submit はフォーム送信用として分ける
 - Script Propertiesに設定する値の実値はdocsやHTML/JSに書かない
 - GAS実装・送信テスト・メール送信は明確な依頼まで行わない
 - 公開、push、commit、フォーム送信、GAS変更は指示があるまで禁止
