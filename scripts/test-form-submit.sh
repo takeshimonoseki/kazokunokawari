@@ -76,6 +76,8 @@ case "${answer}" in
 esac
 
 curl \
+  --location \
+  --post302 \
   --silent \
   --show-error \
   --fail-with-body \

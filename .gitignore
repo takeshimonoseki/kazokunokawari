@@ -2,3 +2,4 @@
 tmp/
 .clasp.json
 **/.clasp.json
+logs/
