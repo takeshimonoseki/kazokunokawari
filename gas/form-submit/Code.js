@@ -9,6 +9,15 @@ const MAIL_STATUS_SKIP = '送信しない';
 const MAIL_STATUS_ERROR = 'エラー';
 const LINE_NOTIFY_STATUS = MAIL_STATUS_SKIP;
 
+function doGet(e) {
+  return createJsonResponse_({
+    ok: true,
+    service: 'kazokunokawari-form-submit',
+    method: 'GET',
+    message: 'GAS Webアプリに到達しています',
+  });
+}
+
 function doPost(e) {
   let payload = null;
   let receiptNumber = '';

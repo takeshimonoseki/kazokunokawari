@@ -17,6 +17,12 @@
 - 自動返信を避ける場合は `ENABLE_AUTO_REPLY=false` であること
 - テスト送信してよいタイミングであること
 
+## 疎通確認手順
+1. doPostテスト前に `scripts/check-gas-webapp.sh` で疎通確認する
+2. `doGet` はSheets書き込み・メール送信をしない
+3. レスポンスJSONに `GAS Webアプリに到達しています` が含まれることを確認する
+4. HTMLや405が返る場合は、URLまたはWebアプリのデプロイ設定が誤っている可能性がある
+
 ## テスト送信手順
 1. `.env.local` に `GAS_WEBAPP_URL` を設定する
 2. `scripts/test-form-submit.sh` を実行する
