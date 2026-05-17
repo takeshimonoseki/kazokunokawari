@@ -50,6 +50,9 @@
 - 秘密情報はdocsやHTML/JSに実値を書かない
 - Sheets作成前に docs/SHEETS_SETUP_PLAN.md を確認する
 - Spreadsheet IDはScript Propertiesで管理する
+- スプレッドシート指定は原則 SPREADSHEET_URL を使う
+- scripts/setup-sheets.sh 側でURLからIDを抽出する
+- Spreadsheet URL / ID の実値はチャット、docs、HTML、JS、Gitに書かない
 - GAS実装前に docs/GAS_IMPLEMENTATION_SPEC.md を確認する
 - Script Propertiesに設定する値の実値はdocsやHTML/JSに書かない
 - GAS実装・送信テスト・メール送信は明確な依頼まで行わない

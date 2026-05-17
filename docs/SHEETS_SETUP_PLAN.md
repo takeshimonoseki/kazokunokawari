@@ -119,10 +119,16 @@ Google Sheetsを手動で作成する手順を具体的に示す。
 -   テスト送信は受付種別またはステータスを「テスト」にする
 -   個人情報を含むため共有範囲を限定する
 -   Spreadsheet IDは公開しない
+-   ローカル作業ではプロジェクト直下の `.env.local` に `SPREADSHEET_URL` を貼る
+-   Spreadsheet IDだけを手で抜き取る必要はない
+-   `scripts/setup-sheets.sh` が `SPREADSHEET_URL` からIDを自動抽出する
+-   `.env.local` はGitに入れない
+-   本番GAS実行時はScript Propertiesで `SPREADSHEET_ID` を管理する
 
 ## 今回はやらないこと
 -   Google Sheets作成
--   GAS作成
+-   フォーム連携GAS本体作成
+-   GASデプロイ
 -   Script Properties設定
 -   フォーム送信
 -   メール送信
