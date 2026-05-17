@@ -59,7 +59,10 @@
 - GAS実装前に docs/GAS_IMPLEMENTATION_SPEC.md を確認する
 - フォーム送信GAS本体は gas/form-submit に置く
 - gas/sheets-setup は初期セットアップ用、gas/form-submit はフォーム送信用として分ける
+- gas/form-submit の外部反映は scripts/push-form-submit.sh を使う
+- FORM_SCRIPT_URL / FORM_SCRIPT_ID は .env.local に置き、Gitに入れない
 - Script Propertiesに設定する値の実値はdocsやHTML/JSに書かない
 - GAS実装・送信テスト・メール送信は明確な依頼まで行わない
+- フォーム送信GASのpush、Webアプリデプロイ、送信テストは明確な依頼まで行わない
 - 公開、push、commit、フォーム送信、GAS変更は指示があるまで禁止
 - 内部リンクはローカル確認でも動くように相対パスを使う
