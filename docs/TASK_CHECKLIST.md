@@ -231,3 +231,13 @@
 - [x] 管理者メール着信成功
 - [ ] LINE通知実装
 - [ ] テストデータ整理
+
+## LINE通知ロードマップ
+- [x] LINE通知設計
+- [ ] Script Properties準備
+- [ ] LINE_TO_ID取得
+- [ ] GAS LINE送信関数実装
+- [ ] LINE通知OFF状態で構文確認
+- [ ] LINE通知ONでテスト1回
+- [ ] Sheetsログ確認
+- [ ] 本番確認

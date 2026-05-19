@@ -69,5 +69,8 @@
 - Script Propertiesに設定する値の実値はdocsやHTML/JSに書かない
 - GAS実装・送信テスト・メール送信は明確な依頼まで行わない
 - フォーム送信GASのpush、Webアプリデプロイ、送信テストは明確な依頼まで行わない
+- LINE通知はMessaging APIを使う
+- LINEトークン・LINE_TO_IDはScript Propertiesで管理する
+- LINE通知の実送信は明確な指示後のみ行う
 - 公開、push、commit、フォーム送信、GAS変更は指示があるまで禁止
 - 内部リンクはローカル確認でも動くように相対パスを使う
