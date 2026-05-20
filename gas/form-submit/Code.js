@@ -1,3 +1,4 @@
+const DEPLOY_VERSION = '20260520-line-config-layout-v1';
 const REQUEST_SHEET_NAME = '依頼・相談';
 const LOG_SHEET_NAME = 'ログ';
 const DEFAULT_FROM_NAME = 'カゾクノカワリ';
@@ -10,10 +11,15 @@ const MAIL_STATUS_ERROR = 'エラー';
 const LINE_NOTIFY_STATUS = MAIL_STATUS_SKIP;
 
 function doGet(e) {
+  const config = getConfig_(true);
   return createJsonResponse_({
     ok: true,
     service: 'kazokunokawari-form-submit',
     method: 'GET',
+    version: DEPLOY_VERSION,
+    enableLineNotify: config.enableLineNotify,
+    hasLineToken: Boolean(config.lineChannelAccessToken),
+    hasLineToId: Boolean(config.lineToId),
     message: 'GAS Webアプリに到達しています',
   });
 }
