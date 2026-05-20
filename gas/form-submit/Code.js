@@ -18,7 +18,41 @@ function doGet(e) {
   });
 }
 
+
+function handleLineWebhook_(payload) {
+  const properties = PropertiesService.getScriptProperties();
+  const lineToId = properties.getProperty('LINE_TO_ID');
+
+  if (!lineToId && payload.events.length > 0) {
+    const event = payload.events[0];
+    const sourceId = event.source.userId || event.source.groupId || event.source.roomId;
+
+    if (sourceId) {
+      properties.setProperty('LINE_TO_ID', sourceId);
+      console.log('LINE_TO_ID has been successfully set.');
+      return createJsonResponse_({ status: 'ok', message: 'LINE_TO_ID set.' });
+    }
+  } else if (lineToId) {
+    console.log('LINE_TO_ID already exists. No changes were made.');
+    return createJsonResponse_({ status: 'ok', message: 'LINE_TO_ID already set.' });
+  }
+
+  console.log('No valid source ID found in webhook or LINE_TO_ID already set.');
+  // LINEプラットフォーム側は200 OKを期待するため、エラー時も正常応答を返す
+  return createJsonResponse_({ status: 'ok', message: 'No valid source ID found or LINE_TO_ID already set.' });
+}
+
 function doPost(e) {
+  // LINE Webhookからのリクエストか判定
+  try {
+    const payload = JSON.parse(e.postData.contents);
+    if (payload.events && Array.isArray(payload.events)) {
+      return handleLineWebhook_(payload);
+    }
+  } catch (error) {
+    // JSONのパースに失敗した場合、LINEのWebhookではないと判断し、通常のフォーム処理を続行
+  }
+
   let payload = null;
   let receiptNumber = '';
 

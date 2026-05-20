@@ -24,9 +24,13 @@
 - LINE通知用の値はApps ScriptのScript Properties画面で直接設定する
 
 ## LINE_TO_ID取得
-- `LINE_TO_ID` の取得方法は別工程にする
-- 取得時も実値をチャット、docs、Gitに書かない
-- 取得後はScript Propertiesへ直接設定する
+- `LINE_TO_ID`はLINEからのWebhookを利用して自動で取得・設定する。
+- **手順:**
+  1. LINE Official Account Manager の「Messaging API設定」画面で、Webhook URLにこのGAS WebアプリのURLを設定する。
+  2. 自分のLINEアカウントから、この公式アカウントに何らかのメッセージを1通送信する。
+  3. Webhookが送信され、`doPost`関数が `source.userId` を検知し、Script Propertiesに `LINE_TO_ID` を自動で保存する。
+- `LINE_TO_ID` が一度設定されたら、上書きはされない。
+- 取得時も実値をチャット、docs、Gitに書かない。
 
 ## 最小実装範囲
 - `ENABLE_LINE_NOTIFY` が `true` の場合のみLINE通知処理を呼ぶ
