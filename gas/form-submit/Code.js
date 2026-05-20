@@ -99,6 +99,16 @@ function doPost(e) {
       appendLogRow_(spreadsheet, 'ERROR', '自動返信メール送信', receiptNumber, '自動返信メールの送信でエラーが発生しました。', errorToDetail_(error));
     }
 
+    try {
+      const lineNotifyStatus = sendLineNotification_(config, payload, receiptNumber);
+      notificationResult.lineNotifyStatus = lineNotifyStatus;
+      appendLogRow_(spreadsheet, 'INFO', 'LINE通知送信', receiptNumber, `LINE通知送信結果: ${lineNotifyStatus}`, {});
+    } catch (error) {
+      notificationResult.lineNotifyStatus = MAIL_STATUS_ERROR;
+      notificationResult.errorMessage = appendErrorMessage_(notificationResult.errorMessage, error);
+      appendLogRow_(spreadsheet, 'ERROR', 'LINE通知送信', receiptNumber, 'LINE通知の送信でエラーが発生しました。', errorToDetail_(error));
+    }
+
     updateNotificationStatus_(spreadsheet, requestRow, notificationResult);
 
     return createJsonResponse_({
