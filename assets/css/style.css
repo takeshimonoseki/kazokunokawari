@@ -64,7 +64,7 @@
 }
 
 .sim-mobile-bar.is-visible {
-  display: flex;
+  display: none;
 }
 
 .sim-mobile-total {
@@ -94,7 +94,7 @@
 
   .sim-result-card {
     position: sticky;
-    top: 5rem;
+    top: 7.5rem;
   }
 
   .sim-mobile-bar,
