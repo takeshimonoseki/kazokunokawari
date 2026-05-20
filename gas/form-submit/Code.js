@@ -453,3 +453,74 @@ function createError_(code, message) {
   error.code = code;
   return error;
 }
+
+function formatRequestRow_(sheet, rowNumber) {
+  if (!sheet || !rowNumber) return;
+  sheet.setRowHeight(rowNumber, 40);
+  sheet.getRange(rowNumber, 1, 1, sheet.getLastColumn()).setWrapStrategy(SpreadsheetApp.WrapStrategy.CLIP);
+  sheet.setColumnWidth(1, 150);
+  sheet.setColumnWidth(2, 210);
+  sheet.setColumnWidth(3, 110);
+  sheet.setColumnWidth(4, 140);
+  sheet.setColumnWidth(5, 150);
+  sheet.setColumnWidth(6, 220);
+  sheet.setColumnWidth(7, 150);
+  sheet.setColumnWidth(8, 220);
+  sheet.setColumnWidth(9, 170);
+  sheet.setColumnWidth(10, 220);
+  sheet.setColumnWidth(14, 260);
+  sheet.setColumnWidth(17, 220);
+  sheet.setColumnWidth(25, 260);
+}
+
+function formatLogRow_(sheet, rowNumber) {
+  if (!sheet || !rowNumber) return;
+  sheet.setRowHeight(rowNumber, 28);
+  sheet.getRange(rowNumber, 1, 1, sheet.getLastColumn()).setWrapStrategy(SpreadsheetApp.WrapStrategy.CLIP);
+  sheet.setColumnWidth(1, 150);
+  sheet.setColumnWidth(2, 90);
+  sheet.setColumnWidth(3, 170);
+  sheet.setColumnWidth(4, 210);
+  sheet.setColumnWidth(5, 360);
+  sheet.setColumnWidth(6, 300);
+}
+
+function fixSheetLayout() {
+  const config = getConfig_(true);
+  const spreadsheet = getSpreadsheet_(config);
+
+  const requestSheet = spreadsheet.getSheetByName(REQUEST_SHEET_NAME);
+  if (requestSheet) {
+    const maxRows = Math.max(requestSheet.getLastRow(), 1);
+    requestSheet.setRowHeights(1, maxRows, 40);
+    requestSheet.getRange(1, 1, maxRows, requestSheet.getLastColumn()).setWrapStrategy(SpreadsheetApp.WrapStrategy.CLIP);
+    requestSheet.setFrozenRows(1);
+    requestSheet.setColumnWidth(1, 150);
+    requestSheet.setColumnWidth(2, 210);
+    requestSheet.setColumnWidth(3, 110);
+    requestSheet.setColumnWidth(4, 140);
+    requestSheet.setColumnWidth(5, 150);
+    requestSheet.setColumnWidth(6, 220);
+    requestSheet.setColumnWidth(7, 150);
+    requestSheet.setColumnWidth(8, 220);
+    requestSheet.setColumnWidth(9, 170);
+    requestSheet.setColumnWidth(10, 220);
+    requestSheet.setColumnWidth(14, 260);
+    requestSheet.setColumnWidth(17, 220);
+    requestSheet.setColumnWidth(25, 260);
+  }
+
+  const logSheet = spreadsheet.getSheetByName(LOG_SHEET_NAME);
+  if (logSheet) {
+    const maxRows = Math.max(logSheet.getLastRow(), 1);
+    logSheet.setRowHeights(1, maxRows, 28);
+    logSheet.getRange(1, 1, maxRows, logSheet.getLastColumn()).setWrapStrategy(SpreadsheetApp.WrapStrategy.CLIP);
+    logSheet.setFrozenRows(1);
+    logSheet.setColumnWidth(1, 150);
+    logSheet.setColumnWidth(2, 90);
+    logSheet.setColumnWidth(3, 170);
+    logSheet.setColumnWidth(4, 210);
+    logSheet.setColumnWidth(5, 360);
+    logSheet.setColumnWidth(6, 300);
+  }
+}
