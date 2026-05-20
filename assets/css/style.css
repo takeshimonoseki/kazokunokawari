@@ -134,3 +134,10 @@
     line-height: 1.05;
   }
 }
+
+/* スマホでは上部の概算カードを隠し、下部固定バーだけを使う */
+@media (max-width: 767px) {
+  #sim-summary {
+    display: none !important;
+  }
+}
