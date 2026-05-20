@@ -234,7 +234,7 @@
 - [x] LINE通知設計
 - [ ] Script Properties準備
 - [ ] LINE_TO_ID取得用Webhook実装
-- [ ] GAS LINE送信関数実装
+- [x] GAS LINE送信関数実装
 - [ ] LINE通知OFF状態で構文確認
 - [ ] LINE通知ONでテスト1回
 - [ ] Sheetsログ確認

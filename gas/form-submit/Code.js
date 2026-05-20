@@ -289,6 +289,54 @@ function sendAdminMail_(config, payload, receiptNumber) {
   return MAIL_STATUS_SENT;
 }
 
+function sendLineNotification_(config, payload, receiptNumber) {
+  if (!config.enableLineNotify) {
+    return MAIL_STATUS_SKIP;
+  }
+  if (!config.lineToId || !config.lineChannelAccessToken) {
+    console.log('LINE通知送信スキップ: LINE_TO_IDまたはLINE_CHANNEL_ACCESS_TOKENが未設定です。');
+    return MAIL_STATUS_SKIP;
+  }
+
+  const messageText = [
+    `【カゾクノカワリ】新規相談・依頼`,
+    `受付番号: ${receiptNumber}`,
+    `お名前: ${getValue_(payload, ['お名前', 'name'])}`,
+    `希望サービス: ${getValue_(payload, ['希望サービス', 'preferredService', 'selectedItems', 'plan'])}`,
+    `希望連絡方法: ${getValue_(payload, ['希望連絡方法', 'preferredContactMethod'])}`,
+    `連絡先: ${getValue_(payload, ['メールアドレス', 'email']) || getValue_(payload, ['電話番号', 'phone'])}`,
+    '---',
+    `内容: ${(getValue_(payload, ['希望内容', 'notes', 'message']) || '').substring(0, 100)}...`,
+  ].join('\n');
+
+  const linePayload = {
+    to: config.lineToId,
+    messages: [{
+      type: 'text',
+      text: messageText,
+    }],
+  };
+
+  const options = {
+    method: 'post',
+    contentType: 'application/json',
+    headers: {
+      Authorization: `Bearer ${config.lineChannelAccessToken}`,
+    },
+    payload: JSON.stringify(linePayload),
+    muteHttpExceptions: true,
+  };
+
+  const response = UrlFetchApp.fetch('https://api.line.me/v2/bot/message/push', options);
+  const responseCode = response.getResponseCode();
+
+  if (responseCode >= 200 && responseCode < 300) {
+    return MAIL_STATUS_SENT;
+  }
+  console.error(`LINE通知送信失敗: status=${responseCode}, response=${response.getContentText()}`);
+  return MAIL_STATUS_ERROR;
+}
+
 function maybeSendAutoReply_(config, payload, receiptNumber) {
   if (!config.enableAutoReply) {
     return MAIL_STATUS_SKIP;

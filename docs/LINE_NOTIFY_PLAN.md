@@ -34,6 +34,7 @@
 
 ## 最小実装範囲
 - `ENABLE_LINE_NOTIFY` が `true` の場合のみLINE通知処理を呼ぶ
+- Script Propertiesから`LINE_CHANNEL_ACCESS_TOKEN`と`LINE_TO_ID`を読み込み、いずれかが未設定なら送信しない。
 - `false` または未設定の場合は「送信しない」として扱う
 - LINE通知に失敗してもフォーム受付自体は正常扱いを維持する
 - 失敗時はGoogle Sheets「ログ」と「依頼・相談」のLINE通知送信列へ記録する
