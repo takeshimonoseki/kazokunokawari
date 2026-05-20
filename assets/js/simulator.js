@@ -43,7 +43,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function isSimulatorVisible() {
     if (!simulatorSection) return false;
     const rect = simulatorSection.getBoundingClientRect();
-    return rect.top < window.innerHeight * 0.82 && rect.bottom > window.innerHeight * 0.18;
+
+    // シミュレーターの上端を少し過ぎてから、下端を抜けるまでは表示する。
+    // 料金を見ながら選び直せるように、判定は広めにする。
+    return rect.top < window.innerHeight * 0.95 && rect.bottom > 120;
   }
 
   function updateMobileBarVisibility() {
@@ -186,10 +189,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (contact) contact.checked = true;
   }
 
-  serviceRadios.forEach((radio) => radio.addEventListener("change", () => { calculate(); updateMobileBarVisibility(); }));
-  optionCheckboxes.forEach((checkbox) => checkbox.addEventListener("change", () => { calculate(); updateMobileBarVisibility(); }));
-  if (visitAreaSelect) visitAreaSelect.addEventListener("change", () => { calculate(); updateMobileBarVisibility(); }); calculate(); });
-  if (visitPlaceInput) visitPlaceInput.addEventListener("input", () => { calculate(); updateMobileBarVisibility(); }); calculate(); });
+  serviceRadios.forEach((radio) => radio.addEventListener("change", () => { calculate(); if (mobileBar) mobileBar.classList.add("is-visible"); updateMobileBarVisibility(); }));
+  optionCheckboxes.forEach((checkbox) => checkbox.addEventListener("change", () => { calculate(); if (mobileBar) mobileBar.classList.add("is-visible"); updateMobileBarVisibility(); }));
+  if (visitAreaSelect) visitAreaSelect.addEventListener("change", () => { calculate(); if (mobileBar) mobileBar.classList.add("is-visible"); updateMobileBarVisibility(); }); calculate(); });
+  if (visitPlaceInput) visitPlaceInput.addEventListener("input", () => { calculate(); if (mobileBar) mobileBar.classList.add("is-visible"); updateMobileBarVisibility(); }); calculate(); });
   consultBtns.forEach((btn) => btn.addEventListener("click", () => { applyEstimateToForm(); updateMobileBarVisibility(); }));
   if (fillTestBtn) fillTestBtn.addEventListener("click", fillTestValues);
 
