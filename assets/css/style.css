@@ -120,3 +120,17 @@
     transform: translateX(-50%);
   }
 }
+
+
+@media (max-width: 767px) {
+  #sim-summary {
+    position: sticky;
+    top: 6.25rem;
+    z-index: 30;
+  }
+
+  #sim-summary .sim-total-large {
+    font-size: 2rem;
+    line-height: 1.05;
+  }
+}
