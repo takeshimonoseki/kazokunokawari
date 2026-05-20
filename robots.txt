@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://takeshimonoseki.github.io/sitemap.xml
+Sitemap: https://takeshimonoseki.github.io/kazokunokawari/sitemap.xml
