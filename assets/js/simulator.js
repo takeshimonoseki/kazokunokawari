@@ -39,18 +39,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const formNote = document.getElementById("form-sim-note");
   const mobileBar = document.querySelector(".sim-mobile-bar");
   const simulatorSection = document.getElementById("simulator");
-  let simulatorTouched = false;
 
-  function showMobileBar() {
-    simulatorTouched = true;
-    if (mobileBar) mobileBar.classList.add("is-visible");
+  function isSimulatorVisible() {
+    if (!simulatorSection) return false;
+    const rect = simulatorSection.getBoundingClientRect();
+    return rect.top < window.innerHeight * 0.82 && rect.bottom > window.innerHeight * 0.18;
   }
 
   function updateMobileBarVisibility() {
-    if (!mobileBar || !simulatorSection || !simulatorTouched) return;
-    const rect = simulatorSection.getBoundingClientRect();
-    const visible = rect.top < window.innerHeight * 0.75 && rect.bottom > window.innerHeight * 0.2;
-    mobileBar.classList.toggle("is-visible", visible);
+    if (!mobileBar) return;
+    mobileBar.classList.toggle("is-visible", isSimulatorVisible());
   }
 
   const baseActualCosts = ["購入品そのものの代金", "高速道路代", "駐車場代", "特殊な消耗品", "自治体処理券", "家電リサイクル料金", "許可業者費用"];
@@ -188,20 +186,20 @@ document.addEventListener("DOMContentLoaded", () => {
     if (contact) contact.checked = true;
   }
 
-  serviceRadios.forEach((radio) => radio.addEventListener("change", () => { showMobileBar(); calculate(); }));
-  optionCheckboxes.forEach((checkbox) => checkbox.addEventListener("change", () => { showMobileBar(); calculate(); }));
-  if (visitAreaSelect) visitAreaSelect.addEventListener("change", () => { showMobileBar(); calculate(); });
-  if (visitPlaceInput) visitPlaceInput.addEventListener("input", () => { showMobileBar(); calculate(); });
-  consultBtns.forEach((btn) => btn.addEventListener("click", () => { showMobileBar(); applyEstimateToForm(); }));
+  serviceRadios.forEach((radio) => radio.addEventListener("change", () => { calculate(); updateMobileBarVisibility(); }));
+  optionCheckboxes.forEach((checkbox) => checkbox.addEventListener("change", () => { calculate(); updateMobileBarVisibility(); }));
+  if (visitAreaSelect) visitAreaSelect.addEventListener("change", () => { calculate(); updateMobileBarVisibility(); }); calculate(); });
+  if (visitPlaceInput) visitPlaceInput.addEventListener("input", () => { calculate(); updateMobileBarVisibility(); }); calculate(); });
+  consultBtns.forEach((btn) => btn.addEventListener("click", () => { applyEstimateToForm(); updateMobileBarVisibility(); }));
   if (fillTestBtn) fillTestBtn.addEventListener("click", fillTestValues);
 
   if (simulatorSection) {
-    simulatorSection.addEventListener("focusin", showMobileBar);
     simulatorSection.addEventListener("click", updateMobileBarVisibility);
+    simulatorSection.addEventListener("focusin", updateMobileBarVisibility);
     window.addEventListener("scroll", updateMobileBarVisibility, { passive: true });
     window.addEventListener("resize", updateMobileBarVisibility);
   }
 
   calculate();
-  if (mobileBar) mobileBar.classList.remove("is-visible");
+  updateMobileBarVisibility();
 });
