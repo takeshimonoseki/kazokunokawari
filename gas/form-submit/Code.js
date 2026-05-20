@@ -523,3 +523,68 @@ function fixSheetLayout() {
     logSheet.setColumnWidth(6, 300);
   }
 }
+
+function debugSheetTargetOnly() {
+  const config = getConfig_(true);
+  const result = {
+    hasSpreadsheetId: Boolean(config.spreadsheetId),
+    requestSheetExists: false,
+    logSheetExists: false,
+    requestLastRow: null,
+    logLastRow: null,
+  };
+
+  if (config.spreadsheetId) {
+    const spreadsheet = getSpreadsheet_(config);
+    const requestSheet = spreadsheet.getSheetByName(REQUEST_SHEET_NAME);
+    const logSheet = spreadsheet.getSheetByName(LOG_SHEET_NAME);
+
+    result.requestSheetExists = Boolean(requestSheet);
+    result.logSheetExists = Boolean(logSheet);
+    result.requestLastRow = requestSheet ? requestSheet.getLastRow() : null;
+    result.logLastRow = logSheet ? logSheet.getLastRow() : null;
+  }
+
+  console.log(JSON.stringify(result));
+  return result;
+}
+
+function testLinePushOnly() {
+  const config = getConfig_(true);
+  const result = {
+    enableLineNotify: config.enableLineNotify,
+    hasLineToken: Boolean(config.lineChannelAccessToken),
+    hasLineToId: Boolean(config.lineToId),
+    responseCode: null,
+    responseBody: '',
+  };
+
+  if (!config.enableLineNotify || !config.lineChannelAccessToken || !config.lineToId) {
+    console.log(JSON.stringify(result));
+    return result;
+  }
+
+  const payload = {
+    to: config.lineToId,
+    messages: [{
+      type: 'text',
+      text: '【カゾクノカワリ】LINE通知テストです。フォーム送信ではありません。',
+    }],
+  };
+
+  const response = UrlFetchApp.fetch('https://api.line.me/v2/bot/message/push', {
+    method: 'post',
+    contentType: 'application/json',
+    headers: {
+      Authorization: `Bearer ${config.lineChannelAccessToken}`,
+    },
+    payload: JSON.stringify(payload),
+    muteHttpExceptions: true,
+  });
+
+  result.responseCode = response.getResponseCode();
+  result.responseBody = response.getContentText();
+
+  console.log(JSON.stringify(result));
+  return result;
+}
