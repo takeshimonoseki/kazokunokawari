@@ -189,6 +189,8 @@ function getConfig_(allowMissing) {
     fromName: properties.getProperty('FROM_NAME') || DEFAULT_FROM_NAME,
     enableAutoReply: normalizeBoolean_(properties.getProperty('ENABLE_AUTO_REPLY')),
     enableLineNotify: normalizeBoolean_(properties.getProperty('ENABLE_LINE_NOTIFY')),
+    lineChannelAccessToken: properties.getProperty('LINE_CHANNEL_ACCESS_TOKEN') || '',
+    lineToId: properties.getProperty('LINE_TO_ID') || '',
     gasEnv: properties.getProperty('GAS_ENV') || 'production',
   };
 
@@ -239,7 +241,9 @@ function appendRequestRow_(spreadsheet, payload, receiptNumber) {
   ];
 
   sheet.appendRow(row);
-  return sheet.getLastRow();
+  const rowNumber = sheet.getLastRow();
+  formatRequestRow_(sheet, rowNumber);
+  return rowNumber;
 }
 
 function appendLogRow_(spreadsheet, level, process, receiptNumber, message, detail) {
@@ -256,6 +260,8 @@ function appendLogRow_(spreadsheet, level, process, receiptNumber, message, deta
     message,
     detail ? JSON.stringify(detail) : '',
   ]);
+  const rowNumber = sheet.getLastRow();
+  formatLogRow_(sheet, rowNumber);
 }
 
 function sendAdminMail_(config, payload, receiptNumber) {
@@ -454,23 +460,22 @@ function createError_(code, message) {
   return error;
 }
 
+function setRequestSheetColumnWidths_(sheet) {
+  const widths = [
+    150, 210, 100, 130, 140,
+    220, 130, 190, 170, 220,
+    160, 160, 180, 260, 130,
+    180, 220, 180, 110, 220,
+    150, 160, 150, 220, 260,
+  ];
+  widths.forEach((width, index) => sheet.setColumnWidth(index + 1, width));
+}
+
 function formatRequestRow_(sheet, rowNumber) {
   if (!sheet || !rowNumber) return;
   sheet.setRowHeight(rowNumber, 40);
   sheet.getRange(rowNumber, 1, 1, sheet.getLastColumn()).setWrapStrategy(SpreadsheetApp.WrapStrategy.CLIP);
-  sheet.setColumnWidth(1, 150);
-  sheet.setColumnWidth(2, 210);
-  sheet.setColumnWidth(3, 110);
-  sheet.setColumnWidth(4, 140);
-  sheet.setColumnWidth(5, 150);
-  sheet.setColumnWidth(6, 220);
-  sheet.setColumnWidth(7, 150);
-  sheet.setColumnWidth(8, 220);
-  sheet.setColumnWidth(9, 170);
-  sheet.setColumnWidth(10, 220);
-  sheet.setColumnWidth(14, 260);
-  sheet.setColumnWidth(17, 220);
-  sheet.setColumnWidth(25, 260);
+  setRequestSheetColumnWidths_(sheet);
 }
 
 function formatLogRow_(sheet, rowNumber) {
@@ -495,19 +500,7 @@ function fixSheetLayout() {
     requestSheet.setRowHeights(1, maxRows, 40);
     requestSheet.getRange(1, 1, maxRows, requestSheet.getLastColumn()).setWrapStrategy(SpreadsheetApp.WrapStrategy.CLIP);
     requestSheet.setFrozenRows(1);
-    requestSheet.setColumnWidth(1, 150);
-    requestSheet.setColumnWidth(2, 210);
-    requestSheet.setColumnWidth(3, 110);
-    requestSheet.setColumnWidth(4, 140);
-    requestSheet.setColumnWidth(5, 150);
-    requestSheet.setColumnWidth(6, 220);
-    requestSheet.setColumnWidth(7, 150);
-    requestSheet.setColumnWidth(8, 220);
-    requestSheet.setColumnWidth(9, 170);
-    requestSheet.setColumnWidth(10, 220);
-    requestSheet.setColumnWidth(14, 260);
-    requestSheet.setColumnWidth(17, 220);
-    requestSheet.setColumnWidth(25, 260);
+    setRequestSheetColumnWidths_(requestSheet);
   }
 
   const logSheet = spreadsheet.getSheetByName(LOG_SHEET_NAME);
