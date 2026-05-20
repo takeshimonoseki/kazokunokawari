@@ -37,6 +37,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const formTotal = document.getElementById("form-sim-total");
   const formVisitAdjustment = document.getElementById("form-sim-visit-adjustment");
   const formNote = document.getElementById("form-sim-note");
+  const mobileBar = document.querySelector(".sim-mobile-bar");
+  const simulatorSection = document.getElementById("simulator");
+  let simulatorTouched = false;
+
+  function showMobileBar() {
+    simulatorTouched = true;
+    if (mobileBar) mobileBar.classList.add("is-visible");
+  }
+
+  function updateMobileBarVisibility() {
+    if (!mobileBar || !simulatorSection || !simulatorTouched) return;
+    const rect = simulatorSection.getBoundingClientRect();
+    const visible = rect.top < window.innerHeight * 0.75 && rect.bottom > window.innerHeight * 0.2;
+    mobileBar.classList.toggle("is-visible", visible);
+  }
 
   const baseActualCosts = ["購入品そのものの代金", "高速道路代", "駐車場代", "特殊な消耗品", "自治体処理券", "家電リサイクル料金", "許可業者費用"];
   let latestEstimate = null;
@@ -173,12 +188,20 @@ document.addEventListener("DOMContentLoaded", () => {
     if (contact) contact.checked = true;
   }
 
-  serviceRadios.forEach((radio) => radio.addEventListener("change", calculate));
-  optionCheckboxes.forEach((checkbox) => checkbox.addEventListener("change", calculate));
-  if (visitAreaSelect) visitAreaSelect.addEventListener("change", calculate);
-  if (visitPlaceInput) visitPlaceInput.addEventListener("input", calculate);
-  consultBtns.forEach((btn) => btn.addEventListener("click", applyEstimateToForm));
+  serviceRadios.forEach((radio) => radio.addEventListener("change", () => { showMobileBar(); calculate(); }));
+  optionCheckboxes.forEach((checkbox) => checkbox.addEventListener("change", () => { showMobileBar(); calculate(); }));
+  if (visitAreaSelect) visitAreaSelect.addEventListener("change", () => { showMobileBar(); calculate(); });
+  if (visitPlaceInput) visitPlaceInput.addEventListener("input", () => { showMobileBar(); calculate(); });
+  consultBtns.forEach((btn) => btn.addEventListener("click", () => { showMobileBar(); applyEstimateToForm(); }));
   if (fillTestBtn) fillTestBtn.addEventListener("click", fillTestValues);
 
+  if (simulatorSection) {
+    simulatorSection.addEventListener("focusin", showMobileBar);
+    simulatorSection.addEventListener("click", updateMobileBarVisibility);
+    window.addEventListener("scroll", updateMobileBarVisibility, { passive: true });
+    window.addEventListener("resize", updateMobileBarVisibility);
+  }
+
   calculate();
+  if (mobileBar) mobileBar.classList.remove("is-visible");
 });

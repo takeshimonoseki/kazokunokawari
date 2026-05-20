@@ -48,32 +48,68 @@
 
     const style = document.createElement("style");
     style.textContent = `
-      #share-actions {
+      .top-phone-bar {
         position: fixed;
-        top: calc(10px + env(safe-area-inset-top, 0px));
-        right: 12px;
-        z-index: 9999;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 60;
+        min-height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 4px 10px;
+        background: #fff;
+        border-bottom: 1px solid #fed7aa;
+        color: #334155;
+        font-size: 13px;
+        font-weight: 800;
+        line-height: 1.25;
+        text-align: center;
+      }
+
+      .top-phone-bar a {
+        color: #ea580c;
+        font-size: 17px;
+        font-weight: 950;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+
+      .top-phone-text-short {
+        display: none;
+      }
+
+      #header-share-slot {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+      }
+
+      #share-actions {
+        position: relative;
+        z-index: 70;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
 
       #share-actions .share-toggle {
-        min-width: 70px;
-        height: 44px;
-        border: none;
+        min-width: 68px;
+        height: 42px;
+        border: 2px solid rgba(255,255,255,.95);
         border-radius: 999px;
         background: linear-gradient(135deg, #06c755, #16a34a);
         color: #fff;
         font-size: 14px;
         font-weight: 900;
-        box-shadow: 0 8px 22px rgba(22, 163, 74, .35);
+        box-shadow: 0 8px 22px rgba(22, 163, 74, .28);
         cursor: pointer;
-        border: 2px solid rgba(255,255,255,.9);
       }
 
       #share-actions .share-menu {
         position: absolute;
         right: 0;
-        top: 52px;
+        top: 50px;
         display: none;
         min-width: 168px;
         padding: 8px;
@@ -121,20 +157,53 @@
         border: 1px solid #fed7aa;
       }
 
+      .sim-mobile-bar {
+        display: none;
+      }
+
+      .sim-mobile-bar.is-visible {
+        display: flex;
+      }
+
       @media (max-width: 640px) {
-        #share-actions {
-          top: calc(9px + env(safe-area-inset-top, 0px));
-          right: 10px;
+        .top-phone-bar {
+          min-height: 34px;
+          padding: 4px 8px;
+          gap: 6px;
+          font-size: 12px;
+        }
+
+        .top-phone-text-long {
+          display: none;
+        }
+
+        .top-phone-text-short {
+          display: inline;
+        }
+
+        .top-phone-bar a {
+          font-size: 16px;
+        }
+
+        header .h-16 {
+          height: 60px;
+        }
+
+        header a.font-black.text-2xl {
+          font-size: 1.45rem;
+          max-width: calc(100vw - 110px);
+          overflow: hidden;
+          white-space: nowrap;
         }
 
         #share-actions .share-toggle {
-          min-width: 64px;
-          height: 42px;
+          min-width: 62px;
+          height: 40px;
           font-size: 13px;
         }
 
         #share-actions .share-menu {
-          top: 50px;
+          top: 48px;
           min-width: 154px;
         }
       }
@@ -195,7 +264,13 @@
 
     menu.append(line, share, copy);
     wrapper.append(toggle, menu);
-    document.body.appendChild(wrapper);
+
+    const slot = document.getElementById("header-share-slot");
+    if (slot) {
+      slot.appendChild(wrapper);
+    } else {
+      document.body.appendChild(wrapper);
+    }
   }
 
   if (document.readyState === "loading") {

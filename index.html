@@ -21,14 +21,14 @@
       }
     </style>
   </head>
-  <body class="bg-amber-50 text-slate-800 antialiased pt-24 sm:pt-24">
-    <div class="fixed top-0 left-0 w-full z-[60] bg-white border-b border-orange-100 text-center text-[12px] sm:text-sm font-bold text-slate-700 px-2 py-1">
-  お急ぎのご相談・下関の実家、空き家、お墓まわりのお手伝いはお電話でも受け付けています。
-  <a href="tel:09078834125" class="text-orange-600 text-base sm:text-lg font-black whitespace-nowrap">090-7883-4125</a>
-  <span class="hidden sm:inline text-xs text-slate-500">（営業・各種ご提案はフォームからお願いします。）</span>
+  <body class="bg-amber-50 text-slate-800 antialiased pt-24 sm:pt-28 sm:pt-28">
+    <div class="top-phone-bar">
+  <span class="top-phone-text-long">お急ぎのご相談・下関の実家、空き家、お墓まわりのお手伝いはお電話でも受け付けています。</span>
+  <span class="top-phone-text-short">お急ぎ相談は電話でも受付</span>
+  <a href="tel:09078834125">090-7883-4125</a>
 </div>
-    <header
-      class="bg-white/90 backdrop-blur-md shadow-sm fixed top-7 sm:top-8 w-full z-50 transition-all duration-300"
+<header
+      class="bg-white/90 backdrop-blur-md shadow-sm fixed top-8 sm:top-8 w-full z-50 transition-all duration-300"
     >
       <div
         class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
@@ -59,6 +59,7 @@
           class="hidden md:inline-flex bg-orange-500 text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-orange-600 shadow-md hover:shadow-lg transition transform hover:-translate-y-0.5"
           >依頼する</a
         >
+              <div id="header-share-slot" class="shrink-0"></div>
       </div>
     </header>
 
@@ -869,6 +870,6 @@
     <script src="assets/js/app.js"></script>
     <script src="assets/js/form-config.js"></script>
     <script src="assets/js/forms.js"></script>
-      <script src="assets/js/share-actions.js?v=20260520-share-header-v3"></script>
+      <script src="assets/js/share-actions.js?v=20260521-header-slot-v1"></script>
 </body>
 </html>
