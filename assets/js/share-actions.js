@@ -59,6 +59,7 @@
         align-items: center;
         justify-content: center;
         gap: 8px;
+        flex-wrap: wrap;
         padding: 4px 10px;
         background: #fff;
         border-bottom: 1px solid #fed7aa;
