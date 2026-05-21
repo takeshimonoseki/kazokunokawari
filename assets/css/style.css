@@ -154,12 +154,12 @@
   content: "";
   position: absolute;
   inset: -18px;
-  background-image: url("../images/hero-bg.jpg?v=20260521-hero-bg-muted-v1");
+  background-image: url("../images/hero-bg.jpg?v=20260521-hero-bg-clean-v2");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: 0.18;
-  filter: blur(6px) saturate(0.9);
+  opacity: 0.34;
+  filter: none;
   transform: scale(1.05);
   pointer-events: none;
   z-index: 0;
