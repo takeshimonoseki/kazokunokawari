@@ -141,3 +141,28 @@
     display: none !important;
   }
 }
+
+
+/* トップページ背景画像 */
+.hero-visual {
+  position: relative;
+  background-image:
+    linear-gradient(135deg, rgba(255, 251, 235, 0.86), rgba(255, 237, 213, 0.82)),
+    url("../images/hero-bg.jpg?v=20260521-brand-image-v1");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hero-visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.20), rgba(255,247,237,0.62));
+  pointer-events: none;
+}
+
+.hero-visual > * {
+  position: relative;
+  z-index: 1;
+}
